@@ -2,7 +2,7 @@ package database;
 import java.sql.*;
 
 public class Main {
-public static void main(String[] args) {
+    public static void main(String[] args) {
         String dbname = "jdbc:mysql://localhost:3306/hospital_management_system",
         username = "root",
         password = "";
@@ -23,7 +23,6 @@ public static void main(String[] args) {
         } catch (SQLException ex) {
             System.out.println("Fetching error: ");
             ex.printStackTrace();
-        }
         }
     }
 }
