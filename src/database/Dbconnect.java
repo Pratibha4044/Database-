@@ -14,15 +14,10 @@ public class Dbconnect {
             ex.printStackTrace();
         }
     }
-    public ResultSet getData(String query){
+    public ResultSet getData(String query)throws SQLException {
         ResultSet res = null;
-        try{
-            Statement stmt = con.createStatement();
-            res = stmt.executeQuery(query);
-        }catch (Exception ex){
-            System.out.println("Fetching Error:");
-            ex.printStackTrace();
-        }
+        Statement stmt = con.createStatement();
+        res = stmt.executeQuery(query);
         return res;
     }
 }

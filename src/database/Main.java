@@ -7,8 +7,8 @@ public static void main(String[] args) {
         username = "root",
         password = "";
         Dbconnect connect = new Dbconnect(dbname, username, password);
-        ResultSet res = connect.getData("select  * from doctors");
         try {
+            ResultSet res = connect.getData("select  * from doctors");
             System.out.println("Records from database: ");
             while (res.next()){ 
             // checks all the entries from the DB (will not enter while loop if no entries)
