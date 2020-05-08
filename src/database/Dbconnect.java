@@ -1,3 +1,4 @@
+package database;
 import java.sql.*;
 
 public class Dbconnect {
@@ -9,8 +10,8 @@ private String dbname, username, password;
     
     public  Dbconnect(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            dbname = "jdbc:mysql://localhost:3306/hospital_managment_system";
+            Class.forName("com.mysql.cj.jdbc.Driver");  // fixed deprecation error
+            dbname = "jdbc:mysql://localhost:3306/hospital_management_system"; 
             username = "root";
             password = "";
             con = DriverManager.getConnection(dbname, username, password);
@@ -25,10 +26,11 @@ private String dbname, username, password;
             String query = "select  * from doctors";
             res = stmt.executeQuery(query);
             System.out.println("Records from database");
-            while (res.next()){
+            while (res.next()){ 
+            // checks all the entries from the DB (will not enter while loop if no entries)
                 int Doctor_id= res.getInt("Doctor_id");
                 String Name = res.getString("Name");
-                 String Assistant_name = res.getString("Assistant name");
+                 String Assistant_name = res.getString("Assistant_name");
                   String Specialisation= res.getString("Specialisation");
                 int Contact_no= res.getInt("Contact_no");
                 int Visiting_hours= res.getInt("Visiting_hours");
