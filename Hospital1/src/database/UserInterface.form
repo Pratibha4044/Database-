@@ -63,7 +63,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="jTabbedPane" min="-2" pref="832" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -133,6 +133,12 @@
                                   <Component id="jComboBox2" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane3" min="-2" pref="569" max="-2" attributes="0"/>
@@ -190,6 +196,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jComboBox2" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
@@ -368,23 +379,34 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable2">
+                <Component class="javax.swing.JTable" name="OPDTable">
                   <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="4">
-                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                      </Table>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    data.toArray(  new Object [][]{}),&#xa;    new String [] {&#xa;        &quot;SHO&quot;, &quot;Name&quot;, &quot;Address&quot;, &quot;Contact No&quot;, &quot;Reason for registration&quot;, &quot;Doctor Id&quot;, &quot;Date&quot;, &quot;Age&quot;, &quot;Gender&quot;&#xa;    }&#xa;)" type="code"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector&lt;Object[]&gt; data = new Vector&lt;&gt;();&#xa;// https://stackoverflow.com/a/27276523&#xa;String dbname = &quot;jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&quot;,&#xa;username = &quot;root&quot;,&#xa;password = &quot;&quot;;&#xa;Dbconnect connect = new Dbconnect(dbname, username, password);&#xa;try {&#xa;    ResultSet res = connect.getData(&quot;select * from OPD&quot;);&#xa;    &#xa;    Object[] row; // stores row data&#xa;    System.out.println(&quot;Records from database: &quot;);&#xa;    while (res.next()){ &#xa;    // checks all the entries from the DB (will not enter while loop if no entries)&#xa;        String SHO = res.getString(&quot;SHO&quot;);&#xa;        String Name = res.getString(&quot;Name&quot;);&#xa;        String Address = res.getString(&quot;Address&quot;);&#xa;        int Contact_no= res.getInt(&quot;Contact_no&quot;);&#xa;        String Reason_for_registration= res.getString(&quot;Reason_for_registration&quot;);&#xa;        int Doctor_id = res.getInt(&quot;Doctor_id&quot;);&#xa;        Date Date= res.getDate(&quot;Date&quot;);&#xa;        int Age= res.getInt(&quot;Age&quot;);&#xa;        String Gender= res.getString(&quot;Gender&quot;);&#xa;       System.out.printf(&quot;SHO : %s\nName: %s\nAddress :%s\nContact_no : %s\nReason_for_registration : %s\nDoctor_id : %s\nDate : %s\nAge : %s\nGender : %s\n,SHO,Name,Address,Contact_no,Reason_for_registration,Doctor_id,Date,Age,Gender );&#xa;        &#xa;        row = new Object[] {SHO,Name,Address,Contact_no,Reason_for_registration,Doctor_id,Date,Age,Gender };&#xa;&#xa;        data.add(row);&#xa;    }&#xa;} catch (SQLException ex) {&#xa;    System.out.println(&quot;Fetching error: &quot;);&#xa;    ex.printStackTrace();&#xa;}"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JButton" name="jButton3">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="SUBMIT"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton4">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="CANCEL"/>
+              </Properties>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="DoctorPanel">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel()"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Doctor">
@@ -434,8 +456,8 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="30" max="32767" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="546" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="995" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -656,53 +678,57 @@
                                   <Component id="jLabel13" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel14" alignment="1" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel17" min="-2" max="-2" attributes="0"/>
-                                  <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jLabel15" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="jLabel16" alignment="1" max="32767" attributes="0"/>
-                                  </Group>
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                      <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jLabel15" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="jLabel16" alignment="1" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="jTextField4" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="jTextField3" alignment="0" pref="120" max="32767" attributes="0"/>
-                                              <Component id="jTextField2" alignment="1" max="32767" attributes="0"/>
-                                              <Component id="jTextField1" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                              <Component id="jTextField4" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                                  <Component id="jTextField3" alignment="0" pref="120" max="32767" attributes="0"/>
+                                                  <Component id="jTextField2" alignment="1" max="32767" attributes="0"/>
+                                                  <Component id="jTextField1" alignment="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Component id="jTextField6" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="jTextField7" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="jTextField8" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="jTextField9" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="jTextField10" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="jTextField11" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                              <Component id="jTextField5" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="jTextField6" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <Component id="jTextField7" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <Component id="jTextField8" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <Component id="jTextField9" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <Component id="jTextField10" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <Component id="jTextField11" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
-                                          <Component id="jTextField5" alignment="1" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <Component id="jButton6" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="jScrollPane2" min="-2" pref="568" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
-                      <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="741" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jPanel3" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -747,7 +773,7 @@
                           <Component id="jTextField8" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
                           <Component id="jLabel13" alignment="3" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="18" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTextField9" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -767,12 +793,14 @@
                           <Component id="jLabel16" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                           <Component id="jTextField5" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="jScrollPane2" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jScrollPane2" alignment="1" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -785,21 +813,6 @@
                 <Property name="text" type="java.lang.String" value="Patient Entry"/>
               </Properties>
             </Component>
-            <Container class="javax.swing.JPanel" name="jPanel3">
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="472" max="32767" attributes="0"/>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-            </Container>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -971,6 +984,16 @@
                 <Property name="text" type="java.lang.String" value="jTextField5"/>
               </Properties>
             </Component>
+            <Component class="javax.swing.JButton" name="jButton5">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="SUBMIT"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jButton6">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="CANCEL"/>
+              </Properties>
+            </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -978,17 +1001,16 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
+                <Component class="javax.swing.JTable" name="PatientTable">
                   <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="4">
-                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                      </Table>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new javax.swing.table.DefaultTableModel(&#xa;    data.toArray( new Object [][] {}),&#xa;    new String [] {&#xa;        &quot;Pateint no&quot;, &quot;Name&quot;, &quot;DOB&quot;, &quot;Blood Group&quot;, &quot;Gender&quot;, &quot;Contact no&quot;, &quot;Emergency Person&quot;, &quot;Emergency Contact no&quot;, &quot;Medical Treatment&quot;, &quot;Date of Admission&quot;, &quot;Date of Discharge&quot;, &quot;Doctor Id&quot;&#xa;    }&#xa;)" type="code"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTable()"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Vector&lt;Object[]&gt; data = new Vector&lt;&gt;();&#xa;// https://stackoverflow.com/a/27276523&#xa;String dbname = &quot;jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&quot;,&#xa;username = &quot;root&quot;,&#xa;password = &quot;&quot;;&#xa;Dbconnect connect = new Dbconnect(dbname, username, password);&#xa;try {&#xa;    ResultSet res = connect.getData(&quot;select * from patient&quot;);&#xa;    &#xa;    Object[] row; // stores row data&#xa;    System.out.println(&quot;Records from database: &quot;);&#xa;    while (res.next()){ &#xa;    // checks all the entries from the DB (will not enter while loop if no entries)&#xa;        int pateint_id= res.getInt(&quot;pateint_no&quot;);&#xa;        String Name = res.getString(&quot;Name&quot;);&#xa;        Date DOB= res.getDate(&quot;DOB&quot;);&#xa;        String Blood_group= res.getString(&quot;Blood_group&quot;);&#xa;        String Gender= res.getString(&quot;Gender&quot;);&#xa;        int Contact_no= res.getInt(&quot;Contact_no&quot;);&#xa;        String Emergency_person= res.getString(&quot;Emergency_person&quot;);&#xa;        int Emergency_contact_no= res.getInt(&quot;Emergency_contact_no&quot;);&#xa;        String Medical_treatment= res.getString(&quot;Medical_treatment&quot;);&#xa;        Date Date_of_admission= res.getDate(&quot;Date_of_admission&quot;);&#xa;        Date Date_of_discharge= res.getDate(&quot;Date_of_discharge&quot;);&#xa;        int Doctor_id = res.getInt(&quot;Doctor_id&quot;);&#xa;        System.out.printf(&quot;pateint_no : %s\nName: %s\nDOB : %s\nBlood_group : %s\nGender : %s\nContact_no : %s\nEmergency_person : %s\nEmergency_contact_no : %s\nMedical_treatment : %s\nDate_of_admission : %s\nDate_of_discharge : %s\nDoctor_id : %s\n&quot;,pateint_no,Name,DOB :Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id );&#xa;        &#xa;        row = new Object[] {pateint_no,Name,DOB :Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id };&#xa;&#xa;        data.add(row);&#xa;    }&#xa;} catch (SQLException ex) {&#xa;    System.out.println(&quot;Fetching error: &quot;);&#xa;    ex.printStackTrace();&#xa;}"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
