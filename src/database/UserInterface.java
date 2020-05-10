@@ -35,6 +35,8 @@ public class UserInterface extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
+
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         buttonGroup1 = new javax.swing.ButtonGroup();
@@ -389,6 +391,9 @@ public class UserInterface extends javax.swing.JFrame {
         doctor_id.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         doctor_id.setText("Doctor ID:");
 
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, doc_id_jTextField, org.jdesktop.beansbinding.ObjectProperty.create(), doctor_id, org.jdesktop.beansbinding.BeanProperty.create("labelFor"));
+        bindingGroup.addBinding(binding);
+
         doc_id_jTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 doc_id_jTextFieldActionPerformed(evt);
@@ -398,11 +403,20 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("Name:");
 
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, doc_NAME_jTextField, org.jdesktop.beansbinding.ObjectProperty.create(), jLabel1, org.jdesktop.beansbinding.BeanProperty.create("labelFor"));
+        bindingGroup.addBinding(binding);
+
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Assistant Name:");
 
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, Assistant_name_jTextField, org.jdesktop.beansbinding.ObjectProperty.create(), jLabel2, org.jdesktop.beansbinding.BeanProperty.create("labelFor"));
+        bindingGroup.addBinding(binding);
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Specialisation:");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, doc_spec_jTextField, org.jdesktop.beansbinding.ObjectProperty.create(), jLabel3, org.jdesktop.beansbinding.BeanProperty.create("labelFor"));
+        bindingGroup.addBinding(binding);
 
         doc_spec_jTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -412,6 +426,9 @@ public class UserInterface extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Visiting Hours:");
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, doc_time_jTextField, org.jdesktop.beansbinding.ObjectProperty.create(), jLabel4, org.jdesktop.beansbinding.BeanProperty.create("labelFor"));
+        bindingGroup.addBinding(binding);
 
         doc_time_jTextField.setModel(new javax.swing.DefaultComboBoxModel<>(
             new String[] {
@@ -528,7 +545,7 @@ public class UserInterface extends javax.swing.JFrame {
                         .addGroup(DoctorPanelLayout.createSequentialGroup()
                             .addGap(29, 29, 29)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(63, Short.MAX_VALUE))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
 
             jTabbedPane.addTab("Doctor", DoctorPanel);
@@ -665,53 +682,55 @@ public class UserInterface extends javax.swing.JFrame {
             OPDPanelLayout.setHorizontalGroup(
                 OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(OPDPanelLayout.createSequentialGroup()
+                    .addContainerGap()
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(OPDPanelLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel8)
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel12)
+                                .addComponent(jLabel13)
+                                .addComponent(jLabel14))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(pat_gender_jComboBox, 0, 149, Short.MAX_VALUE)
+                                .addComponent(pat_contactjTextField)
+                                .addComponent(pat_emerg_contjTextField)
+                                .addComponent(pat_blood_groupjTextField)
+                                .addComponent(pat_dobjTextField)
+                                .addComponent(pat_namejTextField)
+                                .addComponent(pat_nojTextField)
+                                .addComponent(pat_med_treatmentjTextField)
                                 .addGroup(OPDPanelLayout.createSequentialGroup()
-                                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel8)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jLabel11)
-                                        .addComponent(jLabel12)
-                                        .addComponent(jLabel13)
-                                        .addComponent(jLabel14))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(pat_gender_jComboBox, 0, 108, Short.MAX_VALUE)
-                                        .addComponent(pat_contactjTextField)
-                                        .addComponent(pat_emerg_contjTextField)
-                                        .addComponent(pat_blood_groupjTextField)
-                                        .addComponent(pat_dobjTextField)
-                                        .addComponent(pat_namejTextField)
-                                        .addComponent(pat_nojTextField)
-                                        .addComponent(pat_med_treatmentjTextField)
-                                        .addComponent(pat_emerg_personjTextField)))
-                                .addComponent(jLabel5)))
+                                    .addComponent(pat_adm_date_jTextField)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                .addComponent(pat_emerg_personjTextField)))
                         .addGroup(OPDPanelLayout.createSequentialGroup()
-                            .addGap(20, 20, 20)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel5)
                                 .addGroup(OPDPanelLayout.createSequentialGroup()
-                                    .addComponent(pat_submit_jButton)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(pat_update_jButton)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(pat_del_jButton))
-                                .addGroup(OPDPanelLayout.createSequentialGroup()
-                                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel16)
-                                        .addComponent(jLabel15)
-                                        .addComponent(jLabel17))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(pat_adm_date_jTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                                        .addComponent(pat_discharge_date_jTextField)
-                                        .addComponent(pat_doc_idjTextField))))))
-                    .addGap(39, 39, 39)
+                                    .addGap(10, 10, 10)
+                                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(OPDPanelLayout.createSequentialGroup()
+                                            .addComponent(pat_submit_jButton)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(pat_update_jButton)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(pat_del_jButton))
+                                        .addGroup(OPDPanelLayout.createSequentialGroup()
+                                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel16)
+                                                .addComponent(jLabel15)
+                                                .addComponent(jLabel17))
+                                            .addGap(8, 8, 8)
+                                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(pat_doc_idjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(pat_discharge_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
             );
@@ -722,7 +741,7 @@ public class UserInterface extends javax.swing.JFrame {
                         .addGroup(OPDPanelLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jLabel5)
-                            .addGap(31, 31, 31)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel6)
                                 .addComponent(pat_nojTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -758,11 +777,11 @@ public class UserInterface extends javax.swing.JFrame {
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel14)
                                 .addComponent(pat_med_treatmentjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(3, 3, 3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel15)
-                                .addComponent(pat_adm_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(35, 35, 35)
+                                .addComponent(pat_adm_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel15))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel16)
                                 .addComponent(pat_discharge_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -799,6 +818,8 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
             );
+
+            bindingGroup.bind();
 
             pack();
         }// </editor-fold>//GEN-END:initComponents
@@ -1043,5 +1064,6 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTextField pat_nojTextField;
     private javax.swing.JButton pat_submit_jButton;
     private javax.swing.JButton pat_update_jButton;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
