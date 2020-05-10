@@ -14,7 +14,7 @@ public class Dbconnect {
             ex.printStackTrace();
         }
     }
-    public Connection getConnection() { return conn; }
+    public Connection getConnection() { return con; }
     public ResultSet getData(String query)throws SQLException {
         ResultSet res = null;
         Statement stmt = con.createStatement();

@@ -808,7 +808,6 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_pat_emerg_contjTextFieldActionPerformed
 
     private void doc_reset_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_reset_jButtonActionPerformed
-        .
         // TODO add your handling code here:
     }//GEN-LAST:event_doc_reset_jButtonActionPerformed
 
