@@ -12,6 +12,13 @@ import java.util.Vector;
  * @author Ramchandra Patil
  */
 public class UserInterface extends javax.swing.JFrame {
+    
+    // https://stackoverflow.com/a/27276523
+    // the single DB connection...
+    String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+    username = "root",
+    password = "";
+    Dbconnect connect = new Dbconnect(dbname, username, password);
 
     /**
      * Creates new form UserInterface
@@ -55,7 +62,7 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         OPDTable = new javax.swing.JTable();
@@ -74,7 +81,7 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         doc_spec_jTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        doc_time_jTextField = new javax.swing.JComboBox<>();
+        doc_time_jTextField = new javax.swing.JComboBox<String>();
         doc_submit_jButton = new javax.swing.JButton();
         doc_reset_jButton = new javax.swing.JButton();
         OPDPanel = new javax.swing.JPanel();
@@ -101,7 +108,7 @@ public class UserInterface extends javax.swing.JFrame {
         pat_med_treatmentjTextField = new javax.swing.JTextField();
         pat_doc_idjTextField = new javax.swing.JTextField();
         pat_adm_date_jTextField = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBox1 = new javax.swing.JComboBox<String>();
         pat_discharge_date_jTextField = new javax.swing.JTextField();
         pat_submit_jButton = new javax.swing.JButton();
         pat_reset_jButton = new javax.swing.JButton();
@@ -186,7 +193,7 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel27.setText("Gender:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -199,12 +206,7 @@ public class UserInterface extends javax.swing.JFrame {
             .addGap(0, 516, Short.MAX_VALUE)
         );
 
-        Vector<Object[]> data = new Vector<>();
-        // https://stackoverflow.com/a/27276523
-        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        username = "root",
-        password = "";
-        Dbconnect connect = new Dbconnect(dbname, username, password);
+        Vector<Object[]> opd_data = new Vector<>();
         try {
             ResultSet res = connect.getData("select * from OPD");
 
@@ -225,14 +227,14 @@ public class UserInterface extends javax.swing.JFrame {
 
                 row = new Object[] {SHO,Name,Address,Contact_no,Reason_for_registration,Doctor_id,Date,Age,Gender };
 
-                data.add(row);
+                opd_data.add(row);
             }
         } catch (SQLException ex) {
             System.out.println("Fetching error: ");
             ex.printStackTrace();
         }
         OPDTable.setModel(new javax.swing.table.DefaultTableModel(
-            data.toArray(  new Object [][]{}),
+            opd_data.toArray(  new Object [][]{}),
             new String [] {
                 "SHO", "Name", "Address", "Contact No", "Reason for registration", "Doctor Id", "Date", "Age", "Gender"
             }
@@ -347,12 +349,7 @@ public class UserInterface extends javax.swing.JFrame {
 
         jTabbedPane.addTab("OPD", PatientPanel);
 
-        Vector<Object[]> data = new Vector<>();
-        // https://stackoverflow.com/a/27276523
-        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        username = "root",
-        password = "";
-        Dbconnect connect = new Dbconnect(dbname, username, password);
+        Vector<Object[]> doc_data = new Vector<>();
         try {
             ResultSet res = connect.getData("select * from doctors");
             Object[] row; // stores row data
@@ -367,14 +364,14 @@ public class UserInterface extends javax.swing.JFrame {
                 Date Visiting_hours= res.getDate("Visiting_hours");
                 System.out.printf("Doctor_id : %s\nName: %s\nAssistant_name : %s\nSpecialisation : %s\nContact_no : %s\nVisiting_hours : %s\n",Doctor_id,Name,Assistant_name,Specialisation,Contact_no,Visiting_hours );
                 row = new Object[] {Doctor_id, Name, Assistant_name, Specialisation, Contact_no, Visiting_hours};
-                data.add(row);
+                doc_data.add(row);
             }
         } catch (SQLException ex) {
             System.out.println("Fetching error: ");
             ex.printStackTrace();
         }
         DoctorTable.setModel(new javax.swing.table.DefaultTableModel(
-            data.toArray(new Object[][]{}),
+            doc_data.toArray(new Object[][]{}),
             new String [] {
                 "Doctor id", "Name", "Assistant Name", "Specialisation", "Contact no", "Visiting Hours"
             }
@@ -491,8 +488,8 @@ public class UserInterface extends javax.swing.JFrame {
                                                 .addComponent(doc_reset_jButton)
                                                 .addComponent(doc_spec_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGap(39, 39, 39)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(964, 964, 964))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(765, 765, 765))))
             );
             DoctorPanelLayout.setVerticalGroup(
                 DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -588,18 +585,13 @@ public class UserInterface extends javax.swing.JFrame {
                 }
             });
 
-            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male", "Rather not say" }));
+            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Female", "Male", "Rather not say" }));
 
             pat_submit_jButton.setText("SUBMIT");
 
             pat_reset_jButton.setText("CANCEL");
 
-            Vector<Object[]> data = new Vector<>();
-            // https://stackoverflow.com/a/27276523
-            String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-            username = "root",
-            password = "";
-            Dbconnect connect = new Dbconnect(dbname, username, password);
+            Vector<Object[]> pat_data = new Vector<>();
             try {
                 ResultSet res = connect.getData("select * from patient");
 
@@ -619,18 +611,18 @@ public class UserInterface extends javax.swing.JFrame {
                     Date Date_of_admission= res.getDate("Date_of_admission");
                     Date Date_of_discharge= res.getDate("Date_of_discharge");
                     int Doctor_id = res.getInt("Doctor_id");
-                    System.out.printf("pateint_no : %s\nName: %s\nDOB : %s\nBlood_group : %s\nGender : %s\nContact_no : %s\nEmergency_person : %s\nEmergency_contact_no : %s\nMedical_treatment : %s\nDate_of_admission : %s\nDate_of_discharge : %s\nDoctor_id : %s\n",pateint_no,Name,DOB, Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id );
+                    System.out.printf("pateint_no : %s\nName: %s\nDOB : %s\nBlood_group : %s\nGender : %s\nContact_no : %s\nEmergency_person : %s\nEmergency_contact_no : %s\nMedical_treatment : %s\nDate_of_admission : %s\nDate_of_discharge : %s\nDoctor_id : %s\n",patient_id,Name,DOB, Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id );
 
-                    row = new Object[] {patient_no,Name,DOB,Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id };
+                    row = new Object[] {patient_id,Name,DOB,Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id };
 
-                    data.add(row);
+                    pat_data.add(row);
                 }
             } catch (SQLException ex) {
                 System.out.println("Fetching error: ");
                 ex.printStackTrace();
             }
             PatientTable.setModel(new javax.swing.table.DefaultTableModel(
-                data.toArray( new Object [][] {}),
+                pat_data.toArray( new Object [][] {}),
                 new String [] {
                     "Patient no", "Name", "DOB", "Blood Group", "Gender", "Contact no", "Emergency Person", "Emergency Contact no", "Medical Treatment", "Date of Admission", "Date of Discharge", "Doctor Id"
                 }
@@ -687,11 +679,11 @@ public class UserInterface extends javax.swing.JFrame {
                                             .addComponent(pat_discharge_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(pat_reset_jButton))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(222, 222, 222))
                         .addGroup(OPDPanelLayout.createSequentialGroup()
                             .addComponent(jLabel5)
-                            .addGap(0, 0, Short.MAX_VALUE)))
-                    .addGap(741, 741, 741))
+                            .addGap(0, 0, Short.MAX_VALUE))))
             );
             OPDPanelLayout.setVerticalGroup(
                 OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -833,9 +825,7 @@ public class UserInterface extends javax.swing.JFrame {
         username = "root",
         password = "";
         Dbconnect connect = new Dbconnect(dbname, username, password);
-        try {
-            Connection conn = connect.getConnection();  // step 1: get connected to database
-            
+        try(Connection conn = connect.getConnection()) {   // step 1: get connected to database
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
             stmt.setString(1,opd_sho_jTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
