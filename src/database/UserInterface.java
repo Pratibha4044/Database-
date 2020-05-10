@@ -833,7 +833,7 @@ public class UserInterface extends javax.swing.JFrame {
             stmt.setString(2,doc_NAME_jTextField.getText());
             stmt.setString(3,Assistant_name_jTextField.getText());
             stmt.setString(4,doc_spec_jTextField.getText());
-            stmt.setInt(5, Integer.parseInt(doc_contact_jTextField.getText()));
+            stmt.setLong(5, Long.parseLong(doc_contact_jTextField.getText()));
             stmt.setString(6,doc_time_jTextField.getName());
             System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
             conn.close();
@@ -863,7 +863,7 @@ public class UserInterface extends javax.swing.JFrame {
             stmt.setString(1,opd_sho_jTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
             stmt.setString(2,op_name_jTextField.getText());
             stmt.setString(3,opd_address_jTextField.getText());
-            stmt.setInt(4,Integer.parseInt(opd_contact_jTextField.getText()));
+            stmt.setLong(4,Long.parseLong(opd_contact_jTextField.getText()));
             stmt.setString(5,opd_reason_regis_jTextField.getText());
             stmt.setInt(6, Integer.parseInt(opd_doc_id_jTextField.getText()));
             stmt.setDate(7,new Date(Date.parse(opd_date_jTextField.getText())));
@@ -886,9 +886,9 @@ public class UserInterface extends javax.swing.JFrame {
             stmt.setInt(3, Integer.parseInt(pat_dobjTextField.getText()));
             stmt.setString(4,pat_blood_groupjTextField.getText());
             stmt.setString(5,pat_gender_jComboBox.getName());
-            stmt.setInt(6,Integer.parseInt(pat_contactjTextField.getText()));  
+            stmt.setLong(6,Long.parseLong(pat_contactjTextField.getText()));  
             stmt.setString(7,pat_emerg_personjTextField.getText());
-            stmt.setInt(8,Integer.parseInt(pat_emerg_contjTextField.getText())); 
+            stmt.setLong(8,Long.parseLong(pat_emerg_contjTextField.getText())); 
             stmt.setString(9,pat_med_treatmentjTextField.getText());
             stmt.setInt(10,Integer.parseInt(pat_doc_idjTextField.getText()));  
             stmt.setDate(11,new Date(Date.parse(pat_adm_date_jTextField.getText())));

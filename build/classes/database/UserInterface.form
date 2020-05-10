@@ -449,16 +449,11 @@
                                       </Group>
                                   </Group>
                               </Group>
-<<<<<<< HEAD
-                              <Component id="jScrollPane1" min="-2" pref="533" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="765" max="-2" attributes="0"/>
-=======
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="doc_submit_jButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
->>>>>>> cbe6f2eddbf23734525f436d0eba72c09f7964d4
                           </Group>
                       </Group>
                       <Component id="jScrollPane1" min="-2" pref="334" max="-2" attributes="0"/>
