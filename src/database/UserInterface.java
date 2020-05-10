@@ -60,7 +60,8 @@ public class UserInterface extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         OPDTable = new javax.swing.JTable();
         opd_submit_jButton = new javax.swing.JButton();
-        opd_reset_jButton = new javax.swing.JButton();
+        opd_del_jButton = new javax.swing.JButton();
+        opd_update_jButton = new javax.swing.JButton();
         DoctorPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         DoctorTable = new javax.swing.JTable();
@@ -76,9 +77,11 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         doc_time_jTextField = new javax.swing.JComboBox<>();
         doc_submit_jButton = new javax.swing.JButton();
-        doc_reset_jButton = new javax.swing.JButton();
+        doc_del_jButton = new javax.swing.JButton();
         doc_contact_jTextField = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
+        doc_update_jButton = new javax.swing.JButton();
+        jLabel29 = new javax.swing.JLabel();
         OPDPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -106,9 +109,10 @@ public class UserInterface extends javax.swing.JFrame {
         pat_gender_jComboBox = new javax.swing.JComboBox<>();
         pat_discharge_date_jTextField = new javax.swing.JTextField();
         pat_submit_jButton = new javax.swing.JButton();
-        pat_reset_jButton = new javax.swing.JButton();
+        pat_update_jButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         PatientTable = new javax.swing.JTable();
+        pat_del_jButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -248,7 +252,9 @@ public class UserInterface extends javax.swing.JFrame {
             }
         });
 
-        opd_reset_jButton.setText("CANCEL");
+        opd_del_jButton.setText("DELETE");
+
+        opd_update_jButton.setText("UPDATE");
 
         javax.swing.GroupLayout PatientPanelLayout = new javax.swing.GroupLayout(PatientPanel);
         PatientPanel.setLayout(PatientPanelLayout);
@@ -290,10 +296,12 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(PatientPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(opd_submit_jButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(opd_update_jButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(opd_reset_jButton)))
+                        .addComponent(opd_del_jButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -341,7 +349,8 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(opd_submit_jButton)
-                    .addComponent(opd_reset_jButton))
+                    .addComponent(opd_del_jButton)
+                    .addComponent(opd_update_jButton))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane3)
@@ -447,23 +456,25 @@ public class UserInterface extends javax.swing.JFrame {
                 }
             });
 
-            doc_reset_jButton.setText("CANCEL");
-            doc_reset_jButton.addActionListener(new java.awt.event.ActionListener() {
+            doc_del_jButton.setText("DELETE");
+            doc_del_jButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    doc_reset_jButtonActionPerformed(evt);
+                    doc_del_jButtonActionPerformed(evt);
                 }
             });
 
             jLabel28.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
             jLabel28.setText("Contact No:");
 
+            doc_update_jButton.setText("UPDATE");
+
+            jLabel29.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+            jLabel29.setText("Doctor Entry");
+
             javax.swing.GroupLayout DoctorPanelLayout = new javax.swing.GroupLayout(DoctorPanel);
             DoctorPanel.setLayout(DoctorPanelLayout);
             DoctorPanelLayout.setHorizontalGroup(
                 DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DoctorPanelLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(DoctorEntryLabel))
                 .addGroup(DoctorPanelLayout.createSequentialGroup()
                     .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(DoctorPanelLayout.createSequentialGroup()
@@ -481,35 +492,42 @@ public class UserInterface extends javax.swing.JFrame {
                                         .addComponent(jLabel2)
                                         .addComponent(jLabel28)
                                         .addComponent(jLabel4))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(DoctorPanelLayout.createSequentialGroup()
-                                    .addGap(24, 24, 24)
-                                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(Assistant_name_jTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(doc_NAME_jTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(doc_id_jTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(DoctorPanelLayout.createSequentialGroup()
-                                            .addGap(0, 0, Short.MAX_VALUE)
-                                            .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(doc_reset_jButton)
-                                                .addComponent(doc_spec_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(Assistant_name_jTextField)
+                                .addComponent(doc_NAME_jTextField)
+                                .addComponent(doc_id_jTextField)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DoctorPanelLayout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(doc_contact_jTextField)
-                                        .addComponent(doc_time_jTextField, 0, 120, Short.MAX_VALUE))))
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(doc_spec_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(doc_contact_jTextField)
+                                            .addComponent(doc_time_jTextField, 0, 120, Short.MAX_VALUE)))))
                             .addGap(39, 39, 39))
                         .addGroup(DoctorPanelLayout.createSequentialGroup()
-                            .addComponent(doc_submit_jButton)
+                            .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(DoctorPanelLayout.createSequentialGroup()
+                                    .addComponent(doc_submit_jButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(doc_update_jButton)
+                                    .addGap(14, 14, 14)
+                                    .addComponent(doc_del_jButton))
+                                .addGroup(DoctorPanelLayout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(jLabel29)))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(964, 964, 964))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 727, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(426, 426, 426)
+                    .addComponent(DoctorEntryLabel))
             );
             DoctorPanelLayout.setVerticalGroup(
                 DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(DoctorPanelLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(DoctorEntryLabel)
+                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(DoctorEntryLabel)
+                        .addComponent(jLabel29))
                     .addGap(18, 18, 18)
                     .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(doctor_id)
@@ -534,13 +552,11 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel4)
                         .addComponent(doc_time_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(DoctorPanelLayout.createSequentialGroup()
-                            .addGap(30, 30, 30)
-                            .addComponent(doc_reset_jButton))
-                        .addGroup(DoctorPanelLayout.createSequentialGroup()
-                            .addGap(41, 41, 41)
-                            .addComponent(doc_submit_jButton)))
+                    .addGap(41, 41, 41)
+                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(doc_submit_jButton)
+                        .addComponent(doc_update_jButton)
+                        .addComponent(doc_del_jButton))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
             );
@@ -615,7 +631,7 @@ public class UserInterface extends javax.swing.JFrame {
                 }
             });
 
-            pat_reset_jButton.setText("CANCEL");
+            pat_update_jButton.setText("UPDATE");
 
             Vector<Object[]> data = new Vector<>();
             // https://stackoverflow.com/a/27276523
@@ -660,6 +676,8 @@ public class UserInterface extends javax.swing.JFrame {
             ));
             jScrollPane2.setViewportView(PatientTable);
 
+            pat_del_jButton.setText("DELETE");
+
             javax.swing.GroupLayout OPDPanelLayout = new javax.swing.GroupLayout(OPDPanel);
             OPDPanel.setLayout(OPDPanelLayout);
             OPDPanelLayout.setHorizontalGroup(
@@ -669,52 +687,49 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(OPDPanelLayout.createSequentialGroup()
                             .addGap(4, 4, 4)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel10)
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(OPDPanelLayout.createSequentialGroup()
+                                    .addComponent(pat_submit_jButton)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(pat_update_jButton)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(pat_del_jButton))
                                 .addGroup(OPDPanelLayout.createSequentialGroup()
                                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel8)
-                                        .addComponent(jLabel9))
-                                    .addGap(1, 1, 1))
-                                .addComponent(jLabel11)
-                                .addComponent(jLabel13)
-                                .addComponent(jLabel14)
-                                .addComponent(jLabel17)
-                                .addComponent(jLabel12)
-                                .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(pat_submit_jButton)
-                                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                            .addGap(6, 6, 6)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OPDPanelLayout.createSequentialGroup()
-                                    .addComponent(pat_gender_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(56, 56, 56))
-                                .addGroup(OPDPanelLayout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addGroup(OPDPanelLayout.createSequentialGroup()
+                                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel7)
+                                                .addComponent(jLabel6)
+                                                .addComponent(jLabel8)
+                                                .addComponent(jLabel9))
+                                            .addGap(1, 1, 1))
+                                        .addComponent(jLabel11)
+                                        .addComponent(jLabel13)
+                                        .addComponent(jLabel14)
+                                        .addComponent(jLabel17)
+                                        .addComponent(jLabel12)
+                                        .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel15, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(pat_blood_groupjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(pat_dobjTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                                                .addComponent(pat_namejTextField)
-                                                .addComponent(pat_nojTextField, javax.swing.GroupLayout.Alignment.LEADING))
-                                            .addComponent(pat_contactjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(pat_emerg_personjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(pat_emerg_contjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(pat_med_treatmentjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(pat_doc_idjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(pat_adm_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(pat_discharge_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(pat_reset_jButton))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE))
-                        .addGroup(OPDPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addGap(0, 0, Short.MAX_VALUE)))
-                    .addGap(741, 741, 741))
+                                        .addComponent(pat_nojTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_namejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_dobjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_blood_groupjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_gender_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_contactjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_emerg_personjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_emerg_contjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_med_treatmentjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_doc_idjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_adm_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(pat_discharge_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 721, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabel5))
+                    .addGap(43, 43, 43))
             );
             OPDPanelLayout.setVerticalGroup(
                 OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -726,35 +741,34 @@ public class UserInterface extends javax.swing.JFrame {
                         .addComponent(jLabel6)
                         .addComponent(pat_nojTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pat_namejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(pat_namejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(13, 13, 13)
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
                         .addComponent(pat_dobjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(13, 13, 13)
-                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pat_blood_groupjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel9))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(OPDPanelLayout.createSequentialGroup()
-                            .addComponent(jLabel10)
-                            .addGap(18, 18, 18)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel11)
-                                .addComponent(pat_contactjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel12)
-                                .addComponent(pat_emerg_personjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(11, 11, 11)
+                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(pat_blood_groupjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(11, 11, 11)
+                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
                         .addComponent(pat_gender_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(pat_contactjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel12)
+                        .addComponent(pat_emerg_personjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(pat_emerg_contjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel14)
                         .addComponent(pat_med_treatmentjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -763,17 +777,18 @@ public class UserInterface extends javax.swing.JFrame {
                         .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(pat_doc_idjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(pat_adm_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
+                    .addGap(19, 19, 19)
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(pat_discharge_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(31, 31, 31)
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(pat_submit_jButton)
-                        .addComponent(pat_reset_jButton))
+                        .addComponent(pat_update_jButton)
+                        .addComponent(pat_del_jButton))
                     .addContainerGap())
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
             );
@@ -786,7 +801,7 @@ public class UserInterface extends javax.swing.JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 832, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 992, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap())
             );
             layout.setVerticalGroup(
@@ -830,9 +845,9 @@ public class UserInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pat_emerg_contjTextFieldActionPerformed
 
-    private void doc_reset_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_reset_jButtonActionPerformed
+    private void doc_del_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_del_jButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_doc_reset_jButtonActionPerformed
+    }//GEN-LAST:event_doc_del_jButtonActionPerformed
 
     private void doc_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_submit_jButtonActionPerformed
         // https://stackoverflow.com/a/27276523
@@ -985,11 +1000,12 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JTextField doc_NAME_jTextField;
     private javax.swing.JTextField doc_contact_jTextField;
+    private javax.swing.JButton doc_del_jButton;
     private javax.swing.JTextField doc_id_jTextField;
-    private javax.swing.JButton doc_reset_jButton;
     private javax.swing.JTextField doc_spec_jTextField;
     private javax.swing.JButton doc_submit_jButton;
     private javax.swing.JComboBox<String> doc_time_jTextField;
+    private javax.swing.JButton doc_update_jButton;
     private javax.swing.JLabel doctor_id;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -1013,6 +1029,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1032,14 +1049,16 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTextField opd_age_jTextField;
     private javax.swing.JTextField opd_contact_jTextField;
     private javax.swing.JTextField opd_date_jTextField;
+    private javax.swing.JButton opd_del_jButton;
     private javax.swing.JTextField opd_doc_id_jTextField;
     private javax.swing.JTextField opd_reason_regis_jTextField;
-    private javax.swing.JButton opd_reset_jButton;
     private javax.swing.JTextField opd_sho_jTextField;
     private javax.swing.JButton opd_submit_jButton;
+    private javax.swing.JButton opd_update_jButton;
     private javax.swing.JTextField pat_adm_date_jTextField;
     private javax.swing.JTextField pat_blood_groupjTextField;
     private javax.swing.JTextField pat_contactjTextField;
+    private javax.swing.JButton pat_del_jButton;
     private javax.swing.JTextField pat_discharge_date_jTextField;
     private javax.swing.JTextField pat_dobjTextField;
     private javax.swing.JTextField pat_doc_idjTextField;
@@ -1049,8 +1068,8 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTextField pat_med_treatmentjTextField;
     private javax.swing.JTextField pat_namejTextField;
     private javax.swing.JTextField pat_nojTextField;
-    private javax.swing.JButton pat_reset_jButton;
     private javax.swing.JButton pat_submit_jButton;
+    private javax.swing.JButton pat_update_jButton;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
