@@ -829,7 +829,7 @@ public class UserInterface extends javax.swing.JFrame {
         try(Connection conn = connect.getConnection()) {   // step 1: get connected to database
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
-            stmt.setInt(1,doc_id_jTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
+            stmt.setInt(1,Integer.parseInt(doc_id_jTextField.getText()));   // step 3: fetch data from the form and fill the prepared statement
             stmt.setString(2,doc_NAME_jTextField.getText());
             stmt.setString(3,Assistant_name_jTextField.getText());
             stmt.setString(4,doc_spec_jTextField.getText());
@@ -881,16 +881,16 @@ public class UserInterface extends javax.swing.JFrame {
         try(Connection conn = connect.getConnection()) {  // step 1: get connected to database
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
-            stmt.setInt(1,pat_nojTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
+            stmt.setInt(1,Integer.parseInt(pat_nojTextField.getText()));   // step 3: fetch data from the form and fill the prepared statement
             stmt.setString(2,pat_namejTextField.getText());
             stmt.setInt(3, Integer.parseInt(pat_dobjTextField.getText()));
             stmt.setString(4,pat_blood_groupjTextField.getText());
             stmt.setString(5,pat_gender_jComboBox.getName());
-            stmt.setInt(6,pat_contactjTextField.getText());  
+            stmt.setInt(6,Integer.parseInt(pat_contactjTextField.getText()));  
             stmt.setString(7,pat_emerg_personjTextField.getText());
-            stmt.setInt(8,pat_emerg_contjTextField.getText());  
+            stmt.setInt(8,Integer.parseInt(pat_emerg_contjTextField.getText())); 
             stmt.setString(9,pat_med_treatmentjTextField.getText());
-            stmt.setInt(10,pat_doc_idjTextField.getText());  
+            stmt.setInt(10,Integer.parseInt(pat_doc_idjTextField.getText()));  
             stmt.setDate(11,new Date(Date.parse(pat_adm_date_jTextField.getText())));
             stmt.setDate(12,new Date(Date.parse(pat_discharge_date_jTextField.getText())));
             System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
