@@ -77,6 +77,8 @@ public class UserInterface extends javax.swing.JFrame {
         doc_time_jTextField = new javax.swing.JComboBox<>();
         doc_submit_jButton = new javax.swing.JButton();
         doc_reset_jButton = new javax.swing.JButton();
+        doc_contact_jTextField = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
         OPDPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -101,7 +103,7 @@ public class UserInterface extends javax.swing.JFrame {
         pat_med_treatmentjTextField = new javax.swing.JTextField();
         pat_doc_idjTextField = new javax.swing.JTextField();
         pat_adm_date_jTextField = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        pat_gender_jComboBox = new javax.swing.JComboBox<>();
         pat_discharge_date_jTextField = new javax.swing.JTextField();
         pat_submit_jButton = new javax.swing.JButton();
         pat_reset_jButton = new javax.swing.JButton();
@@ -452,14 +454,18 @@ public class UserInterface extends javax.swing.JFrame {
                 }
             });
 
+            jLabel28.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+            jLabel28.setText("Contact No:");
+
             javax.swing.GroupLayout DoctorPanelLayout = new javax.swing.GroupLayout(DoctorPanel);
             DoctorPanel.setLayout(DoctorPanelLayout);
             DoctorPanelLayout.setHorizontalGroup(
                 DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DoctorPanelLayout.createSequentialGroup()
                     .addContainerGap()
+                    .addComponent(DoctorEntryLabel))
+                .addGroup(DoctorPanelLayout.createSequentialGroup()
                     .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(DoctorEntryLabel)
                         .addGroup(DoctorPanelLayout.createSequentialGroup()
                             .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(DoctorPanelLayout.createSequentialGroup()
@@ -473,14 +479,11 @@ public class UserInterface extends javax.swing.JFrame {
                                     .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(jLabel3)
                                         .addComponent(jLabel2)
-                                        .addComponent(jLabel4)
-                                        .addComponent(doc_submit_jButton, javax.swing.GroupLayout.Alignment.LEADING))))
-                            .addGap(24, 24, 24)
+                                        .addComponent(jLabel28)
+                                        .addComponent(jLabel4))))
                             .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(DoctorPanelLayout.createSequentialGroup()
-                                    .addComponent(doc_time_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(DoctorPanelLayout.createSequentialGroup()
+                                    .addGap(24, 24, 24)
                                     .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addComponent(Assistant_name_jTextField, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(doc_NAME_jTextField, javax.swing.GroupLayout.Alignment.LEADING)
@@ -489,10 +492,18 @@ public class UserInterface extends javax.swing.JFrame {
                                             .addGap(0, 0, Short.MAX_VALUE)
                                             .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                 .addComponent(doc_reset_jButton)
-                                                .addComponent(doc_spec_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGap(39, 39, 39)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(964, 964, 964))))
+                                                .addComponent(doc_spec_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DoctorPanelLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(doc_contact_jTextField)
+                                        .addComponent(doc_time_jTextField, 0, 120, Short.MAX_VALUE))))
+                            .addGap(39, 39, 39))
+                        .addGroup(DoctorPanelLayout.createSequentialGroup()
+                            .addComponent(doc_submit_jButton)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(964, 964, 964))
             );
             DoctorPanelLayout.setVerticalGroup(
                 DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -515,16 +526,23 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(doc_spec_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(18, 18, 18)
+                    .addGap(24, 24, 24)
                     .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(doc_contact_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel28))
+                    .addGap(18, 18, 18)
+                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jLabel4)
                         .addComponent(doc_time_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(49, 49, 49)
-                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(doc_submit_jButton)
-                        .addComponent(doc_reset_jButton))
+                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(DoctorPanelLayout.createSequentialGroup()
+                            .addGap(30, 30, 30)
+                            .addComponent(doc_reset_jButton))
+                        .addGroup(DoctorPanelLayout.createSequentialGroup()
+                            .addGap(41, 41, 41)
+                            .addComponent(doc_submit_jButton)))
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
             );
 
             jTabbedPane.addTab("Doctor", DoctorPanel);
@@ -588,9 +606,14 @@ public class UserInterface extends javax.swing.JFrame {
                 }
             });
 
-            jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male", "Rather not say" }));
+            pat_gender_jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male", "Rather not say" }));
 
             pat_submit_jButton.setText("SUBMIT");
+            pat_submit_jButton.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    pat_submit_jButtonActionPerformed(evt);
+                }
+            });
 
             pat_reset_jButton.setText("CANCEL");
 
@@ -668,7 +691,7 @@ public class UserInterface extends javax.swing.JFrame {
                             .addGap(6, 6, 6)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OPDPanelLayout.createSequentialGroup()
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(pat_gender_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(56, 56, 56))
                                 .addGroup(OPDPanelLayout.createSequentialGroup()
                                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -726,7 +749,7 @@ public class UserInterface extends javax.swing.JFrame {
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel12)
                                 .addComponent(pat_emerg_personjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pat_gender_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(18, 18, 18)
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(pat_emerg_contjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -812,7 +835,30 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_doc_reset_jButtonActionPerformed
 
     private void doc_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_submit_jButtonActionPerformed
-        // TODO add your handling code here:
+        // https://stackoverflow.com/a/27276523
+        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+        username = "root",
+        password = "";
+        Dbconnect connect = new Dbconnect(dbname, username, password);
+        try {
+            Connection conn = connect.getConnection();  // step 1: get connected to database
+            
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
+            
+            stmt.setInt(1,doc_id_jTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
+            stmt.setString(2,doc_NAME_jTextField.getText());
+            stmt.setString(3,Assistant_name_jTextField.getText());
+            stmt.setString(4,doc_spec_jTextField.getText());
+            stmt.setInt(5, Integer.parseInt(doc_contact_jTextField.getText()));
+            stmt.setString(6,doc_time_jTextField.getName());
+            System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println("Insertion error: ");
+            ex.printStackTrace();
+        }        
+    }                                
+
     }//GEN-LAST:event_doc_submit_jButtonActionPerformed
 
     private void doc_time_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_time_jTextFieldActionPerformed
@@ -854,6 +900,41 @@ public class UserInterface extends javax.swing.JFrame {
             ex.printStackTrace();
         }        
     }//GEN-LAST:event_opd_to_database
+
+    private void pat_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_submit_jButtonActionPerformed
+               // https://stackoverflow.com/a/27276523
+        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+        username = "root",
+        password = "";
+        Dbconnect connect = new Dbconnect(dbname, username, password);
+        try {
+            Connection conn = connect.getConnection();  // step 1: get connected to database
+            
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
+            
+            stmt.setInt(1,pat_nojTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
+            stmt.setString(2,pat_namejTextField.getText());
+            stmt.setInt(3, Integer.parseInt(pat_dobjTextField.getText()));
+            stmt.setString(4,pat_blood_groupjTextField.getText());
+            stmt.setString(5,pat_gender_jComboBox.getName());
+            stmt.setInt(6,pat_contactjTextField.getText());  
+            stmt.setString(7,pat_emerg_personjTextField.getText());
+            stmt.setInt(8,pat_emerg_contjTextField.getText());  
+            stmt.setString(9,pat_med_treatmentjTextField.getText());
+            stmt.setInt(10,pat_doc_idjTextField.getText());  
+            stmt.setDate(11,new Date(Date.parse(pat_adm_date_jTextField.getText())));
+            stmt.setDate(12,new Date(Date.parse(pat_discharge_date_jTextField.getText())));
+            System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println("Insertion error: ");
+            ex.printStackTrace();
+        }        
+    }                                
+
+    }                                                  
+
+    }//GEN-LAST:event_pat_submit_jButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -903,13 +984,13 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JTextField doc_NAME_jTextField;
+    private javax.swing.JTextField doc_contact_jTextField;
     private javax.swing.JTextField doc_id_jTextField;
     private javax.swing.JButton doc_reset_jButton;
     private javax.swing.JTextField doc_spec_jTextField;
     private javax.swing.JButton doc_submit_jButton;
     private javax.swing.JComboBox<String> doc_time_jTextField;
     private javax.swing.JLabel doctor_id;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -931,6 +1012,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -963,6 +1045,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTextField pat_doc_idjTextField;
     private javax.swing.JTextField pat_emerg_contjTextField;
     private javax.swing.JTextField pat_emerg_personjTextField;
+    private javax.swing.JComboBox<String> pat_gender_jComboBox;
     private javax.swing.JTextField pat_med_treatmentjTextField;
     private javax.swing.JTextField pat_namejTextField;
     private javax.swing.JTextField pat_nojTextField;
