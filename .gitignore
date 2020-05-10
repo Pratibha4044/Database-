@@ -1,3 +1,7 @@
-/Hospital1/nbproject/private/
-/Hospital1/build/
-/Hospital1/dist/
+# do not monitor all the private netbeans project configs
+nbproject/private/
+# do not monitor the build folder
+build/
+# no need of monitoring dist folder, but monitor the dist lib folder
+dist/
+!dist/lib
