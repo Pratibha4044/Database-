@@ -826,13 +826,7 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_doc_reset_jButtonActionPerformed
 
     private void doc_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_submit_jButtonActionPerformed
-        // https://stackoverflow.com/a/27276523
-        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        username = "root",
-        password = "";
-        Dbconnect connect = new Dbconnect(dbname, username, password);
         try(Connection conn = connect.getConnection()) {   // step 1: get connected to database
-            
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
             stmt.setInt(1,doc_id_jTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
@@ -848,7 +842,7 @@ public class UserInterface extends javax.swing.JFrame {
             ex.printStackTrace();
         }        
     }
-    //GEN-LAST:event_doc_submit_jButtonActionPerformed
+//GEN-LAST:event_doc_submit_jButtonActionPerformed
 
     private void doc_time_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_time_jTextFieldActionPerformed
         // TODO add your handling code here:
@@ -884,13 +878,7 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_opd_to_database
 
     private void pat_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_submit_jButtonActionPerformed
-               // https://stackoverflow.com/a/27276523
-        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        username = "root",
-        password = "";
-        Dbconnect connect = new Dbconnect(dbname, username, password);
         try(Connection conn = connect.getConnection()) {  // step 1: get connected to database
-            
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
             stmt.setInt(1,pat_nojTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
@@ -913,7 +901,7 @@ public class UserInterface extends javax.swing.JFrame {
         }        
     }
 
-    //GEN-LAST:event_pat_submit_jButtonActionPerformed
+//GEN-LAST:event_pat_submit_jButtonActionPerformed
 
     /**
      * @param args the command line arguments
