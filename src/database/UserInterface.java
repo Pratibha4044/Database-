@@ -800,8 +800,6 @@ public class UserInterface extends javax.swing.JFrame {
                     .addContainerGap())
             );
 
-            bindingGroup.bind();
-
             pack();
         }// </editor-fold>//GEN-END:initComponents
 
