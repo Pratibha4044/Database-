@@ -12,6 +12,13 @@ import java.util.Vector;
  * @author Ramchandra Patil
  */
 public class UserInterface extends javax.swing.JFrame {
+    
+    // https://stackoverflow.com/a/27276523
+    // the single DB connection...
+    String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+    username = "root",
+    password = "";
+    Dbconnect connect = new Dbconnect(dbname, username, password);
 
     /**
      * Creates new form UserInterface
@@ -55,7 +62,7 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jComboBox2 = new javax.swing.JComboBox<String>();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         OPDTable = new javax.swing.JTable();
@@ -75,7 +82,7 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         doc_spec_jTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        doc_time_jTextField = new javax.swing.JComboBox<>();
+        doc_time_jTextField = new javax.swing.JComboBox<String>();
         doc_submit_jButton = new javax.swing.JButton();
         doc_del_jButton = new javax.swing.JButton();
         doc_contact_jTextField = new javax.swing.JTextField();
@@ -192,7 +199,7 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel27.setText("Gender:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -205,12 +212,7 @@ public class UserInterface extends javax.swing.JFrame {
             .addGap(0, 516, Short.MAX_VALUE)
         );
 
-        Vector<Object[]> data = new Vector<>();
-        // https://stackoverflow.com/a/27276523
-        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        username = "root",
-        password = "";
-        Dbconnect connect = new Dbconnect(dbname, username, password);
+        Vector<Object[]> opd_data = new Vector<>();
         try {
             ResultSet res = connect.getData("select * from OPD");
 
@@ -231,14 +233,14 @@ public class UserInterface extends javax.swing.JFrame {
 
                 row = new Object[] {SHO,Name,Address,Contact_no,Reason_for_registration,Doctor_id,Date,Age,Gender };
 
-                data.add(row);
+                opd_data.add(row);
             }
         } catch (SQLException ex) {
             System.out.println("Fetching error: ");
             ex.printStackTrace();
         }
         OPDTable.setModel(new javax.swing.table.DefaultTableModel(
-            data.toArray(  new Object [][]{}),
+            opd_data.toArray(  new Object [][]{}),
             new String [] {
                 "SHO", "Name", "Address", "Contact No", "Reason for registration", "Doctor Id", "Date", "Age", "Gender"
             }
@@ -358,12 +360,7 @@ public class UserInterface extends javax.swing.JFrame {
 
         jTabbedPane.addTab("OPD", PatientPanel);
 
-        Vector<Object[]> data = new Vector<>();
-        // https://stackoverflow.com/a/27276523
-        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        username = "root",
-        password = "";
-        Dbconnect connect = new Dbconnect(dbname, username, password);
+        Vector<Object[]> doc_data = new Vector<>();
         try {
             ResultSet res = connect.getData("select * from doctors");
             Object[] row; // stores row data
@@ -378,14 +375,14 @@ public class UserInterface extends javax.swing.JFrame {
                 Date Visiting_hours= res.getDate("Visiting_hours");
                 System.out.printf("Doctor_id : %s\nName: %s\nAssistant_name : %s\nSpecialisation : %s\nContact_no : %s\nVisiting_hours : %s\n",Doctor_id,Name,Assistant_name,Specialisation,Contact_no,Visiting_hours );
                 row = new Object[] {Doctor_id, Name, Assistant_name, Specialisation, Contact_no, Visiting_hours};
-                data.add(row);
+                doc_data.add(row);
             }
         } catch (SQLException ex) {
             System.out.println("Fetching error: ");
             ex.printStackTrace();
         }
         DoctorTable.setModel(new javax.swing.table.DefaultTableModel(
-            data.toArray(new Object[][]{}),
+            doc_data.toArray(new Object[][]{}),
             new String [] {
                 "Doctor id", "Name", "Assistant Name", "Specialisation", "Contact no", "Visiting Hours"
             }
@@ -621,7 +618,6 @@ public class UserInterface extends javax.swing.JFrame {
                     pat_adm_date_jTextFieldActionPerformed(evt);
                 }
             });
-
             pat_gender_jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male", "Rather not say" }));
 
             pat_submit_jButton.setText("SUBMIT");
@@ -633,12 +629,7 @@ public class UserInterface extends javax.swing.JFrame {
 
             pat_update_jButton.setText("UPDATE");
 
-            Vector<Object[]> data = new Vector<>();
-            // https://stackoverflow.com/a/27276523
-            String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-            username = "root",
-            password = "";
-            Dbconnect connect = new Dbconnect(dbname, username, password);
+            Vector<Object[]> pat_data = new Vector<>();
             try {
                 ResultSet res = connect.getData("select * from patient");
 
@@ -658,18 +649,18 @@ public class UserInterface extends javax.swing.JFrame {
                     Date Date_of_admission= res.getDate("Date_of_admission");
                     Date Date_of_discharge= res.getDate("Date_of_discharge");
                     int Doctor_id = res.getInt("Doctor_id");
-                    System.out.printf("pateint_no : %s\nName: %s\nDOB : %s\nBlood_group : %s\nGender : %s\nContact_no : %s\nEmergency_person : %s\nEmergency_contact_no : %s\nMedical_treatment : %s\nDate_of_admission : %s\nDate_of_discharge : %s\nDoctor_id : %s\n",pateint_no,Name,DOB, Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id );
+                    System.out.printf("pateint_no : %s\nName: %s\nDOB : %s\nBlood_group : %s\nGender : %s\nContact_no : %s\nEmergency_person : %s\nEmergency_contact_no : %s\nMedical_treatment : %s\nDate_of_admission : %s\nDate_of_discharge : %s\nDoctor_id : %s\n",patient_id,Name,DOB, Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id );
 
-                    row = new Object[] {patient_no,Name,DOB,Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id };
+                    row = new Object[] {patient_id,Name,DOB,Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id };
 
-                    data.add(row);
+                    pat_data.add(row);
                 }
             } catch (SQLException ex) {
                 System.out.println("Fetching error: ");
                 ex.printStackTrace();
             }
             PatientTable.setModel(new javax.swing.table.DefaultTableModel(
-                data.toArray( new Object [][] {}),
+                pat_data.toArray( new Object [][] {}),
                 new String [] {
                     "Patient no", "Name", "DOB", "Blood Group", "Gender", "Contact no", "Emergency Person", "Emergency Contact no", "Medical Treatment", "Date of Admission", "Date of Discharge", "Doctor Id"
                 }
@@ -714,22 +705,26 @@ public class UserInterface extends javax.swing.JFrame {
                                             .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(pat_nojTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_namejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_dobjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_blood_groupjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_gender_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_contactjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_emerg_personjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_emerg_contjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_med_treatmentjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_doc_idjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_adm_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(pat_discharge_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 721, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabel5))
-                    .addGap(43, 43, 43))
+                                        .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(pat_blood_groupjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(pat_dobjTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                                                .addComponent(pat_namejTextField)
+                                                .addComponent(pat_nojTextField, javax.swing.GroupLayout.Alignment.LEADING))
+                                            .addComponent(pat_contactjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(pat_emerg_personjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(pat_emerg_contjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(pat_med_treatmentjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(pat_doc_idjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(pat_adm_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(pat_discharge_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(pat_reset_jButton))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(222, 222, 222))
+                        .addGroup(OPDPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel5)
+                            .addGap(0, 0, Short.MAX_VALUE))))
             );
             OPDPanelLayout.setVerticalGroup(
                 OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -850,21 +845,14 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_doc_del_jButtonActionPerformed
 
     private void doc_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_submit_jButtonActionPerformed
-        // https://stackoverflow.com/a/27276523
-        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        username = "root",
-        password = "";
-        Dbconnect connect = new Dbconnect(dbname, username, password);
-        try {
-            Connection conn = connect.getConnection();  // step 1: get connected to database
-            
+        try(Connection conn = connect.getConnection()) {   // step 1: get connected to database
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
-            stmt.setInt(1,doc_id_jTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
+            stmt.setInt(1,Integer.parseInt(doc_id_jTextField.getText()));   // step 3: fetch data from the form and fill the prepared statement
             stmt.setString(2,doc_NAME_jTextField.getText());
             stmt.setString(3,Assistant_name_jTextField.getText());
             stmt.setString(4,doc_spec_jTextField.getText());
-            stmt.setInt(5, Integer.parseInt(doc_contact_jTextField.getText()));
+            stmt.setLong(5, Long.parseLong(doc_contact_jTextField.getText()));
             stmt.setString(6,doc_time_jTextField.getName());
             System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
             conn.close();
@@ -872,9 +860,8 @@ public class UserInterface extends javax.swing.JFrame {
             System.out.println("Insertion error: ");
             ex.printStackTrace();
         }        
-    }                                
-
-    }//GEN-LAST:event_doc_submit_jButtonActionPerformed
+    }
+//GEN-LAST:event_doc_submit_jButtonActionPerformed
 
     private void doc_time_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_time_jTextFieldActionPerformed
         // TODO add your handling code here:
@@ -889,20 +876,13 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_doc_id_jTextFieldActionPerformed
 
     private void opd_to_database(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opd_to_database
-        // https://stackoverflow.com/a/27276523
-        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        username = "root",
-        password = "";
-        Dbconnect connect = new Dbconnect(dbname, username, password);
-        try {
-            Connection conn = connect.getConnection();  // step 1: get connected to database
-            
+        try(Connection conn = connect.getConnection()) {   // step 1: get connected to database
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
             stmt.setString(1,opd_sho_jTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
             stmt.setString(2,op_name_jTextField.getText());
             stmt.setString(3,opd_address_jTextField.getText());
-            stmt.setInt(4,Integer.parseInt(opd_contact_jTextField.getText()));
+            stmt.setLong(4,Long.parseLong(opd_contact_jTextField.getText()));
             stmt.setString(5,opd_reason_regis_jTextField.getText());
             stmt.setInt(6, Integer.parseInt(opd_doc_id_jTextField.getText()));
             stmt.setDate(7,new Date(Date.parse(opd_date_jTextField.getText())));
@@ -917,26 +897,19 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_opd_to_database
 
     private void pat_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_submit_jButtonActionPerformed
-               // https://stackoverflow.com/a/27276523
-        String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
-        username = "root",
-        password = "";
-        Dbconnect connect = new Dbconnect(dbname, username, password);
-        try {
-            Connection conn = connect.getConnection();  // step 1: get connected to database
-            
+        try(Connection conn = connect.getConnection()) {  // step 1: get connected to database
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
-            stmt.setInt(1,pat_nojTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
+            stmt.setInt(1,Integer.parseInt(pat_nojTextField.getText()));   // step 3: fetch data from the form and fill the prepared statement
             stmt.setString(2,pat_namejTextField.getText());
             stmt.setInt(3, Integer.parseInt(pat_dobjTextField.getText()));
             stmt.setString(4,pat_blood_groupjTextField.getText());
             stmt.setString(5,pat_gender_jComboBox.getName());
-            stmt.setInt(6,pat_contactjTextField.getText());  
+            stmt.setLong(6,Long.parseLong(pat_contactjTextField.getText()));  
             stmt.setString(7,pat_emerg_personjTextField.getText());
-            stmt.setInt(8,pat_emerg_contjTextField.getText());  
+            stmt.setLong(8,Long.parseLong(pat_emerg_contjTextField.getText())); 
             stmt.setString(9,pat_med_treatmentjTextField.getText());
-            stmt.setInt(10,pat_doc_idjTextField.getText());  
+            stmt.setInt(10,Integer.parseInt(pat_doc_idjTextField.getText()));  
             stmt.setDate(11,new Date(Date.parse(pat_adm_date_jTextField.getText())));
             stmt.setDate(12,new Date(Date.parse(pat_discharge_date_jTextField.getText())));
             System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
@@ -945,11 +918,9 @@ public class UserInterface extends javax.swing.JFrame {
             System.out.println("Insertion error: ");
             ex.printStackTrace();
         }        
-    }                                
+    }
 
-    }                                                  
-
-    }//GEN-LAST:event_pat_submit_jButtonActionPerformed
+//GEN-LAST:event_pat_submit_jButtonActionPerformed
 
     /**
      * @param args the command line arguments
