@@ -50,7 +50,6 @@ public class UserInterface extends javax.swing.JFrame {
         opd_contact_jTextField = new javax.swing.JTextField();
         opd_reason_regis_jTextField = new javax.swing.JTextField();
         opd_doc_id_jTextField = new javax.swing.JTextField();
-        opd_date_jTextField = new javax.swing.JTextField();
         opd_age_jTextField = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -58,11 +57,9 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
-        jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         OPDTable = new javax.swing.JTable();
         opd_submit_jButton = new javax.swing.JButton();
@@ -80,7 +77,7 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         doc_spec_jTextField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        doc_time_jTextField = new javax.swing.JComboBox<>();
+        doc_time_jComboBox = new javax.swing.JComboBox<>();
         doc_submit_jButton = new javax.swing.JButton();
         doc_del_jButton = new javax.swing.JButton();
         doc_contact_jTextField = new javax.swing.JTextField();
@@ -182,9 +179,6 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel24.setText("Doctor Id:");
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel25.setText("Date:");
-
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel26.setText("Age:");
 
@@ -193,64 +187,24 @@ public class UserInterface extends javax.swing.JFrame {
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male", "Rather not say" }));
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 452, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        Vector<Object[]> opd_data = new Vector<>();
-        try{
-
-            Dbconnect connect = new Dbconnect(dbname, username, password);
-            ResultSet res = connect.getData("select * from OPD");
-
-            Object[] row; // stores row data
-            System.out.println("Records from database: ");
-            while (res.next()){
-                // checks all the entries from the DB (will not enter while loop if no entries)
-                String SHO = res.getString("SHO");
-                String Name = res.getString("Name");
-                String Address = res.getString("Address");
-                int Contact_no= res.getInt("Contact_no");
-                String Reason_for_registration= res.getString("Reason_for_registration");
-                int Doctor_id = res.getInt("Doctor_id");
-                Date Date= res.getDate("Date");
-                int Age= res.getInt("Age");
-                String Gender= res.getString("Gender");
-                System.out.printf("SHO : %s\nName: %s\nAddress :%s\nContact_no : %s\nReason_for_registration : %s\nDoctor_id : %s\nDate : %s\nAge : %s\nGender : %s\n",SHO,Name,Address,Contact_no,Reason_for_registration,Doctor_id,Date,Age,Gender );
-
-                row = new Object[] {SHO,Name,Address,Contact_no,Reason_for_registration,Doctor_id,Date,Age,Gender };
-
-                opd_data.add(row);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Fetching error: ");
-            ex.printStackTrace();
-        }
-        OPDTable.setModel(new javax.swing.table.DefaultTableModel(
-            opd_data.toArray(  new Object [][]{}),
-            new String [] {
-                "SHO", "Name", "Address", "Contact No", "Reason for registration", "Doctor Id", "Date", "Age", "Gender"
-            }
-        ));
+        OPDTable.setModel(fetchOPDTableData(OPDTable, true));
         jScrollPane3.setViewportView(OPDTable);
 
         opd_submit_jButton.setText("SUBMIT");
-        opd_submit_jButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                opd_to_database(evt);
+        opd_submit_jButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opd_submit_jButtonActionPerformed(evt);
             }
         });
 
         opd_del_jButton.setText("DELETE");
 
         opd_update_jButton.setText("UPDATE");
+        opd_update_jButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opd_update_jButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PatientPanelLayout = new javax.swing.GroupLayout(PatientPanel);
         PatientPanel.setLayout(PatientPanelLayout);
@@ -277,111 +231,84 @@ public class UserInterface extends javax.swing.JFrame {
                     .addGroup(PatientPanelLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel24)
-                            .addComponent(jLabel23)
-                            .addComponent(jLabel25)
-                            .addComponent(jLabel26)
-                            .addComponent(jLabel27))
-                        .addGap(18, 18, 18)
-                        .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(opd_reason_regis_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(opd_doc_id_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(opd_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(opd_age_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(PatientPanelLayout.createSequentialGroup()
+                                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel26)
+                                    .addComponent(jLabel27))
+                                .addGap(18, 18, 18)
+                                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(opd_age_jTextField)
+                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(PatientPanelLayout.createSequentialGroup()
+                                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel24)
+                                    .addComponent(jLabel23))
+                                .addGap(18, 18, 18)
+                                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(opd_reason_regis_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(opd_doc_id_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(PatientPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(opd_submit_jButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(opd_update_jButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(opd_del_jButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 778, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         PatientPanelLayout.setVerticalGroup(
             PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PatientPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel18)
-                .addGap(18, 18, 18)
-                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(opd_sho_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(op_name_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21)
-                    .addComponent(opd_address_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel22)
-                    .addComponent(opd_contact_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opd_reason_regis_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(15, 15, 15)
-                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(opd_doc_id_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24))
-                .addGap(16, 16, 16)
-                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel25)
-                    .addComponent(opd_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opd_age_jTextField)
-                    .addComponent(jLabel26))
-                .addGap(18, 18, 18)
                 .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel27))
-                .addGap(40, 40, 40)
-                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opd_submit_jButton)
-                    .addComponent(opd_del_jButton)
-                    .addComponent(opd_update_jButton))
-                .addGap(114, 114, 114))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane3)
+                    .addGroup(PatientPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addGap(18, 18, 18)
+                        .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel19)
+                            .addComponent(opd_sho_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(op_name_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel21)
+                            .addComponent(opd_address_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22)
+                            .addComponent(opd_contact_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(opd_reason_regis_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
+                        .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(opd_doc_id_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel24))
+                        .addGap(18, 18, 18)
+                        .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(opd_age_jTextField)
+                            .addComponent(jLabel26))
+                        .addGap(18, 18, 18)
+                        .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel27))
+                        .addGap(40, 40, 40)
+                        .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(opd_submit_jButton)
+                            .addComponent(opd_del_jButton)
+                            .addComponent(opd_update_jButton)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         jTabbedPane.addTab("OPD", PatientPanel);
 
-        Vector<Object[]> doc_data = new Vector<>();
-        try {
-            Dbconnect connect = new Dbconnect(dbname, username, password);
-            ResultSet res = connect.getData("select * from doctors");
-            Object[] row; // stores row data
-            System.out.println("Records from database: ");
-            while (res.next()){
-                // checks all the entries from the DB (will not enter while loop if no entries)
-                int Doctor_id= res.getInt("Doctor_id");
-                String Name = res.getString("Name");
-                String Assistant_name = res.getString("Assistant_name");
-                String Specialisation= res.getString("Specialisation");
-                int Contact_no= res.getInt("Contact_no");
-                Date Visiting_hours= res.getDate("Visiting_hours");
-                System.out.printf("Doctor_id : %s\nName: %s\nAssistant_name : %s\nSpecialisation : %s\nContact_no : %s\nVisiting_hours : %s\n",Doctor_id,Name,Assistant_name,Specialisation,Contact_no,Visiting_hours );
-                row = new Object[] {Doctor_id, Name, Assistant_name, Specialisation, Contact_no, Visiting_hours};
-                doc_data.add(row);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Fetching error: ");
-            ex.printStackTrace();
-        }
-        DoctorTable.setModel(new javax.swing.table.DefaultTableModel(
-            doc_data.toArray(new Object[][]{}),
-            new String [] {
-                "Doctor id", "Name", "Assistant Name", "Specialisation", "Contact no", "Visiting Hours"
-            }
-        ));
+        DoctorTable.setModel(fetchDocTableData(DoctorTable, true));
         jScrollPane1.setViewportView(DoctorTable);
 
         doctor_id.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -411,15 +338,15 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Visiting Hours:");
 
-        doc_time_jTextField.setModel(new javax.swing.DefaultComboBoxModel<>(
+        doc_time_jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(
             new String[] {
                 "09:00-13:00",
                 "15:30-19:30",
                 "20:00-21:30"
             }));
-            doc_time_jTextField.addActionListener(new java.awt.event.ActionListener() {
+            doc_time_jComboBox.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    doc_time_jTextFieldActionPerformed(evt);
+                    doc_time_jComboBoxActionPerformed(evt);
                 }
             });
 
@@ -450,49 +377,53 @@ public class UserInterface extends javax.swing.JFrame {
             DoctorPanelLayout.setHorizontalGroup(
                 DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(DoctorPanelLayout.createSequentialGroup()
+                    .addContainerGap()
                     .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(DoctorPanelLayout.createSequentialGroup()
+                            .addComponent(jLabel29)
+                            .addGap(118, 118, 118))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DoctorPanelLayout.createSequentialGroup()
                             .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(DoctorPanelLayout.createSequentialGroup()
-                                    .addGap(60, 60, 60)
-                                    .addComponent(jLabel1))
+                                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(DoctorPanelLayout.createSequentialGroup()
+                                            .addGap(60, 60, 60)
+                                            .addComponent(jLabel1))
+                                        .addGroup(DoctorPanelLayout.createSequentialGroup()
+                                            .addGap(40, 40, 40)
+                                            .addComponent(doctor_id))
+                                        .addGroup(DoctorPanelLayout.createSequentialGroup()
+                                            .addGap(8, 8, 8)
+                                            .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel3)
+                                                .addComponent(jLabel2)
+                                                .addComponent(jLabel28)
+                                                .addComponent(jLabel4))))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(Assistant_name_jTextField)
+                                        .addComponent(doc_NAME_jTextField)
+                                        .addComponent(doc_id_jTextField)
+                                        .addComponent(doc_spec_jTextField)
+                                        .addComponent(doc_contact_jTextField)
+                                        .addComponent(doc_time_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(DoctorPanelLayout.createSequentialGroup()
-                                    .addGap(40, 40, 40)
-                                    .addComponent(doctor_id))
-                                .addGroup(DoctorPanelLayout.createSequentialGroup()
-                                    .addGap(8, 8, 8)
-                                    .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel3)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabel28)
-                                        .addComponent(jLabel4))))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(Assistant_name_jTextField)
-                                .addComponent(doc_NAME_jTextField)
-                                .addComponent(doc_id_jTextField)
-                                .addComponent(doc_spec_jTextField)
-                                .addComponent(doc_contact_jTextField)
-                                .addComponent(doc_time_jTextField, 0, 102, Short.MAX_VALUE)))
-                        .addGroup(DoctorPanelLayout.createSequentialGroup()
-                            .addComponent(doc_submit_jButton)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(doc_update_jButton)
-                            .addGap(14, 14, 14)
-                            .addComponent(doc_del_jButton))
-                        .addGroup(DoctorPanelLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel29)))
-                    .addGap(26, 26, 26)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(471, Short.MAX_VALUE))
+                                    .addComponent(doc_submit_jButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(doc_update_jButton)
+                                    .addGap(14, 14, 14)
+                                    .addComponent(doc_del_jButton)))
+                            .addGap(18, 18, 18)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(18, Short.MAX_VALUE))
             );
             DoctorPanelLayout.setVerticalGroup(
                 DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(DoctorPanelLayout.createSequentialGroup()
+                    .addContainerGap()
                     .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(DoctorPanelLayout.createSequentialGroup()
-                            .addContainerGap()
                             .addComponent(jLabel29)
                             .addGap(18, 18, 18)
                             .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -517,16 +448,13 @@ public class UserInterface extends javax.swing.JFrame {
                             .addGap(21, 21, 21)
                             .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel4)
-                                .addComponent(doc_time_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(doc_time_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(38, 38, 38)
                             .addGroup(DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(doc_submit_jButton)
                                 .addComponent(doc_update_jButton)
-                                .addComponent(doc_del_jButton)))
-                        .addGroup(DoctorPanelLayout.createSequentialGroup()
-                            .addGap(29, 29, 29)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(doc_del_jButton))))
+                    .addContainerGap())
             );
 
             jTabbedPane.addTab("Doctor", DoctorPanel);
@@ -616,45 +544,53 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(OPDPanelLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel5)
                         .addGroup(OPDPanelLayout.createSequentialGroup()
+                            .addGap(64, 64, 64)
+                            .addComponent(jLabel11)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(pat_contactjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(OPDPanelLayout.createSequentialGroup()
+                            .addGap(59, 59, 59)
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7)
+                                .addComponent(jLabel9)
+                                .addComponent(jLabel10))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(pat_nojTextField)
+                                .addComponent(pat_namejTextField)
+                                .addComponent(pat_blood_groupjTextField)
+                                .addComponent(pat_gender_jComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(OPDPanelLayout.createSequentialGroup()
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel12)
+                                .addComponent(jLabel13)
+                                .addComponent(jLabel14)
+                                .addComponent(jLabel17))
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(OPDPanelLayout.createSequentialGroup()
-                                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jLabel10)
-                                        .addComponent(jLabel11)
-                                        .addComponent(jLabel12)
-                                        .addComponent(jLabel13)
-                                        .addComponent(jLabel14)
-                                        .addComponent(jLabel17))
-                                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(OPDPanelLayout.createSequentialGroup()
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(pat_nojTextField)
-                                                .addComponent(pat_namejTextField)
-                                                .addComponent(pat_blood_groupjTextField)
-                                                .addComponent(pat_gender_jComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(pat_contactjTextField)
-                                                .addComponent(pat_emerg_personjTextField)
-                                                .addComponent(pat_emerg_contjTextField)
-                                                .addComponent(pat_doc_idjTextField)))
-                                        .addGroup(OPDPanelLayout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addComponent(pat_med_treatmentjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(10, 10, 10)
+                                    .addComponent(pat_med_treatmentjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(OPDPanelLayout.createSequentialGroup()
-                                    .addGap(17, 17, 17)
-                                    .addComponent(pat_submit_jButton)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(pat_update_jButton)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(pat_del_jButton)))
-                            .addGap(51, 51, 51)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(38, 38, 38))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(pat_emerg_personjTextField)
+                                        .addComponent(pat_emerg_contjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OPDPanelLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(pat_doc_idjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(OPDPanelLayout.createSequentialGroup()
+                            .addGap(17, 17, 17)
+                            .addComponent(pat_submit_jButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(pat_update_jButton)
+                            .addGap(18, 18, 18)
+                            .addComponent(pat_del_jButton))
+                        .addComponent(jLabel5))
+                    .addGap(18, 18, 18)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
             );
             OPDPanelLayout.setVerticalGroup(
                 OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -672,23 +608,25 @@ public class UserInterface extends javax.swing.JFrame {
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel7)
                                 .addComponent(pat_namejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(42, 42, 42)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel9)
                                 .addComponent(pat_blood_groupjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel10)
                                 .addComponent(pat_gender_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel11)
                                 .addComponent(pat_contactjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(pat_emerg_personjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(11, 11, 11)
+                                .addGroup(OPDPanelLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(pat_emerg_personjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel13)
                                 .addComponent(pat_emerg_contjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -705,7 +643,7 @@ public class UserInterface extends javax.swing.JFrame {
                                 .addComponent(pat_update_jButton)
                                 .addComponent(pat_del_jButton)
                                 .addComponent(pat_submit_jButton))))
-                    .addContainerGap(151, Short.MAX_VALUE))
+                    .addContainerGap())
             );
 
             jTabbedPane.addTab("Patient", OPDPanel);
@@ -716,35 +654,15 @@ public class UserInterface extends javax.swing.JFrame {
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 20, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 1078, javax.swing.GroupLayout.PREFERRED_SIZE)
             );
             layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 22, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
             );
 
             pack();
         }// </editor-fold>//GEN-END:initComponents
-
-    private void opd_sho_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opd_sho_jTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_opd_sho_jTextFieldActionPerformed
-
-    private void op_name_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_op_name_jTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_op_name_jTextFieldActionPerformed
-
-    private void opd_contact_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opd_contact_jTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_opd_contact_jTextFieldActionPerformed
-
-    private void opd_doc_id_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opd_doc_id_jTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_opd_doc_id_jTextFieldActionPerformed
 
     private void doc_del_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_del_jButtonActionPerformed
         // TODO add your handling code here:
@@ -753,15 +671,16 @@ public class UserInterface extends javax.swing.JFrame {
     private void doc_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_submit_jButtonActionPerformed
         Dbconnect connect = new Dbconnect(dbname, username, password);
         try(Connection conn = connect.getConnection()) {   // step 1: get connected to database
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO doctors VALUES (?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
             stmt.setInt(1,Integer.parseInt(doc_id_jTextField.getText()));   // step 3: fetch data from the form and fill the prepared statement
             stmt.setString(2,doc_NAME_jTextField.getText());
             stmt.setString(3,Assistant_name_jTextField.getText());
             stmt.setString(4,doc_spec_jTextField.getText());
             stmt.setLong(5, Long.parseLong(doc_contact_jTextField.getText()));
-            stmt.setString(6,doc_time_jTextField.getName());
+            stmt.setString(6,(String)doc_time_jComboBox.getSelectedItem());
             System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
+            fetchDocTableData(DoctorTable, false);
         } catch (SQLException ex) {
             System.out.println("Insertion error: ");
             ex.printStackTrace();
@@ -769,9 +688,9 @@ public class UserInterface extends javax.swing.JFrame {
     }
 //GEN-LAST:event_doc_submit_jButtonActionPerformed
 
-    private void doc_time_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_time_jTextFieldActionPerformed
+    private void doc_time_jComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_time_jComboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_doc_time_jTextFieldActionPerformed
+    }//GEN-LAST:event_doc_time_jComboBoxActionPerformed
 
     private void doc_spec_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_spec_jTextFieldActionPerformed
         // TODO add your handling code here:
@@ -780,27 +699,6 @@ public class UserInterface extends javax.swing.JFrame {
     private void doc_id_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_id_jTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_doc_id_jTextFieldActionPerformed
-
-    private void opd_to_database(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opd_to_database
-        Dbconnect connect = new Dbconnect(dbname, username, password);
-        try(Connection conn = connect.getConnection()) {   // step 1: get connected to database
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
-            
-            stmt.setString(1,opd_sho_jTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
-            stmt.setString(2,op_name_jTextField.getText());
-            stmt.setString(3,opd_address_jTextField.getText());
-            stmt.setLong(4,Long.parseLong(opd_contact_jTextField.getText()));
-            stmt.setString(5,opd_reason_regis_jTextField.getText());
-            stmt.setInt(6, Integer.parseInt(opd_doc_id_jTextField.getText()));
-            //stmt.setDate(7,new Date(Date.parse(opd_date_jTextField.getText())));
-            stmt.setInt(8,Integer.parseInt(opd_age_jTextField.getText()));
-            stmt.setString(9,jComboBox2.getName());
-            System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
-        } catch (SQLException ex) {
-            System.out.println("Insertion error: ");
-            ex.printStackTrace();
-        }        
-    }//GEN-LAST:event_opd_to_database
 
     private void pat_emerg_personjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_emerg_personjTextFieldActionPerformed
         // TODO add your handling code here:
@@ -828,12 +726,20 @@ public class UserInterface extends javax.swing.JFrame {
         } catch (Exception ex) {
             javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage(), "Insertion Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             System.out.println("Insertion error: ");
-            ex.printStackTrace();
+            ex.printStackTrace();            
         }
     }//GEN-LAST:event_pat_submit_jButtonActionPerformed
     
     public javax.swing.table.DefaultTableModel fetchPatTableData(javax.swing.JTable table, boolean init) {
-        Vector<Object[]> pat_data = new Vector<>();
+        //Vector<Object[]> pat_data = new Vector<>();
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel)table.getModel();
+        if(init)
+            model = new javax.swing.table.DefaultTableModel(
+                new String [] {
+                    "Patient no", "Name", "Blood Group", "Gender", "Contact no", "Emergency Person", "Emergency Contact no", "Medical Treatment",  "Doctor Id"
+                },0
+            );
+        model.setRowCount(0);
         try {
             Dbconnect connect = new Dbconnect(dbname, username, password);
             ResultSet res = connect.getData("select * from patient");
@@ -846,34 +752,92 @@ public class UserInterface extends javax.swing.JFrame {
                 String Name = res.getString("Name");
                 String Blood_group= res.getString("Blood_group");
                 String Gender= res.getString("Gender");
-                int Contact_no= res.getInt("Contact_no");
+                long Contact_no= res.getLong("Contact_no");
                 String Emergency_person= res.getString("Emergency_person");
-                int Emergency_contact_no= res.getInt("Emergency_contact_no");
+                long Emergency_contact_no= res.getLong("Emergency_contact_no");
                 String Medical_treatment= res.getString("Medical_treatment");
                 int Doctor_id = res.getInt("Doctor_id");
 
                 row = new Object[] {patient_id,Name,Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Doctor_id };
-
-                pat_data.add(row);
+                model.addRow(row);
             }
         } catch (SQLException ex) {
             System.out.println("Fetching error: ");
             ex.printStackTrace();
         }
+        
+        return model;
+    }  
+    
+    public javax.swing.table.DefaultTableModel fetchOPDTableData(javax.swing.JTable table, boolean init) {
         javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel)table.getModel();
         if(init)
             model = new javax.swing.table.DefaultTableModel(
-                pat_data.toArray( new Object [][] {}),
                 new String [] {
-                    "Patient no", "Name", "Blood Group", "Gender", "Contact no", "Emergency Person", "Emergency Contact no", "Medical Treatment",  "Doctor Id"
-                }
+                    "SHO", "Name", "Address", "Contact No", "Reason for registration", "Doctor Id", "Age", "Gender"
+                },0
             );
-        else model.fireTableDataChanged();
-        table.repaint();
-        
-        return model;
-    }   
+        model.setRowCount(0);
+        try{
+            Dbconnect connect = new Dbconnect(dbname, username, password);
+            ResultSet res = connect.getData("select * from OPD");
+
+            Object[] row; // stores row data
+            System.out.println("Records from database: ");
+            while (res.next()){ 
+            // checks all the entries from the DB (will not enter while loop if no entries)
+                String SHO = res.getString("SHO");
+                String Name = res.getString("Name");
+                String Address = res.getString("Address");
+                long Contact_no= res.getLong("Contact_no");
+                String Reason_for_registration= res.getString("Reason_for_registration");
+                int Doctor_id = res.getInt("Doctor_id");
+                int Age= res.getInt("Age");
+                String Gender= res.getString("Gender");
+                
+                row = new Object[] {SHO,Name,Address,Contact_no,Reason_for_registration,Doctor_id,Age,Gender };
+
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Fetching error: ");
+            ex.printStackTrace();
+        }
+        return model;   
+    }
     
+    public javax.swing.table.DefaultTableModel fetchDocTableData(javax.swing.JTable table, boolean init){
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel)table.getModel();
+        if(init)
+            model = new javax.swing.table.DefaultTableModel( new String [] {
+                "Doctor id", "Name", "Assistant Name", "Specialisation", "Contact no", "Visiting Hours"
+            },0
+        );
+        model.setRowCount(0);
+        try {
+            Dbconnect connect = new Dbconnect(dbname, username, password);
+            ResultSet res = connect.getData("select * from doctors");
+            Object[] row; // stores row data
+            System.out.println("Records from database: ");
+            while (res.next()){ 
+            // checks all the entries from the DB (will not enter while loop if no entries)
+                int Doctor_id= res.getInt("Doctor_id");
+                String Name = res.getString("Name");
+                String Assistant_name = res.getString("Assistant_name");
+                String Specialisation= res.getString("Specialisation");
+                long Contact_no= res.getLong("Contact_no");
+                String Visiting_hours= res.getString("Visiting_hours");
+                System.out.printf("Doctor_id : %s\nName: %s\nAssistant_name : %s\nSpecialisation : %s\nContact_no : %s\nVisiting_hours : %s\n",Doctor_id,Name,Assistant_name,Specialisation,Contact_no,Visiting_hours );
+                row = new Object[] {Doctor_id, Name, Assistant_name, Specialisation, Contact_no, Visiting_hours};
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Fetching error: ");
+            ex.printStackTrace();
+        }
+        return model;
+
+    }
     private void pat_gender_jComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_gender_jComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pat_gender_jComboBoxActionPerformed
@@ -889,6 +853,48 @@ public class UserInterface extends javax.swing.JFrame {
     private void pat_contactjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_contactjTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pat_contactjTextFieldActionPerformed
+
+    private void opd_update_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opd_update_jButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_opd_update_jButtonActionPerformed
+
+    private void opd_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opd_submit_jButtonActionPerformed
+        Dbconnect connect = new Dbconnect(dbname, username, password);
+        try(Connection conn = connect.getConnection()) {   // step 1: get connected to database
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
+
+            stmt.setString(1,opd_sho_jTextField.getText());   // step 3: fetch data from the form and fill the prepared statement
+            stmt.setString(2,op_name_jTextField.getText());
+            stmt.setString(3,opd_address_jTextField.getText());
+            stmt.setLong(4,Long.parseLong(opd_contact_jTextField.getText()));
+            stmt.setString(5,opd_reason_regis_jTextField.getText());
+            stmt.setInt(6, Integer.parseInt(opd_doc_id_jTextField.getText()));
+            //stmt.setDate(7,new Date(Date.parse(opd_date_jTextField.getText())));
+            stmt.setInt(7,Integer.parseInt(opd_age_jTextField.getText()));
+            stmt.setString(8,(String)jComboBox2.getSelectedItem());
+            System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
+            fetchOPDTableData(PatientTable, false);
+        } catch (SQLException ex) {
+            System.out.println("Insertion error: ");
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_opd_submit_jButtonActionPerformed
+
+    private void opd_doc_id_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opd_doc_id_jTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_opd_doc_id_jTextFieldActionPerformed
+
+    private void opd_contact_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opd_contact_jTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_opd_contact_jTextFieldActionPerformed
+
+    private void op_name_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_op_name_jTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_op_name_jTextFieldActionPerformed
+
+    private void opd_sho_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opd_sho_jTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_opd_sho_jTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -942,7 +948,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTextField doc_id_jTextField;
     private javax.swing.JTextField doc_spec_jTextField;
     private javax.swing.JButton doc_submit_jButton;
-    private javax.swing.JComboBox<String> doc_time_jTextField;
+    private javax.swing.JComboBox<String> doc_time_jComboBox;
     private javax.swing.JButton doc_update_jButton;
     private javax.swing.JLabel doctor_id;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -961,7 +967,6 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
@@ -974,7 +979,6 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -984,7 +988,6 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTextField opd_address_jTextField;
     private javax.swing.JTextField opd_age_jTextField;
     private javax.swing.JTextField opd_contact_jTextField;
-    private javax.swing.JTextField opd_date_jTextField;
     private javax.swing.JButton opd_del_jButton;
     private javax.swing.JTextField opd_doc_id_jTextField;
     private javax.swing.JTextField opd_reason_regis_jTextField;

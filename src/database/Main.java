@@ -17,7 +17,7 @@
 //                String Name = res.getString("Name");
 //                String Assistant_name = res.getString("Assistant_name");
 //                String Specialisation= res.getString("Specialisation");
-//                int Contact_no= res.getInt("Contact_no");
+//                long Contact_no= res.getLong("Contact_no");
 //                Date Visiting_hours= res.getDate("Visiting_hours");
 //                System.out.printf("Doctor_id : %s\nName: %s\nAssistant_name : %s\nSpecialisation : %s\nContact_no : %s\nVisiting_hours : %s\n",Doctor_id,Name,Assistant_name,Specialisation,Contact_no,Visiting_hours );
 //            }
