@@ -18,7 +18,6 @@ public class UserInterface extends javax.swing.JFrame {
     String dbname = "jdbc:mysql://localhost:3306/hospital_management_system?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
     username = "root",
     password = "";
-    Dbconnect connect = new Dbconnect(dbname, username, password);
 
     /**
      * Creates new form UserInterface
@@ -35,11 +34,13 @@ public class UserInterface extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
+        jScrollPane4 = new javax.swing.JScrollPane();
         jTabbedPane = new javax.swing.JTabbedPane();
         PatientPanel = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -89,27 +90,21 @@ public class UserInterface extends javax.swing.JFrame {
         OPDPanel = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         pat_namejTextField = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         pat_nojTextField = new javax.swing.JTextField();
-        pat_dobjTextField = new javax.swing.JTextField();
         pat_blood_groupjTextField = new javax.swing.JTextField();
         pat_contactjTextField = new javax.swing.JTextField();
         pat_emerg_contjTextField = new javax.swing.JTextField();
         pat_med_treatmentjTextField = new javax.swing.JTextField();
         pat_doc_idjTextField = new javax.swing.JTextField();
-        pat_adm_date_jTextField = new javax.swing.JTextField();
         pat_gender_jComboBox = new javax.swing.JComboBox<>();
-        pat_discharge_date_jTextField = new javax.swing.JTextField();
         pat_submit_jButton = new javax.swing.JButton();
         pat_update_jButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -196,7 +191,7 @@ public class UserInterface extends javax.swing.JFrame {
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel27.setText("Gender:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male", "Rather not say" }));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -206,11 +201,13 @@ public class UserInterface extends javax.swing.JFrame {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 599, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         Vector<Object[]> opd_data = new Vector<>();
-        try {
+        try{
+
+            Dbconnect connect = new Dbconnect(dbname, username, password);
             ResultSet res = connect.getData("select * from OPD");
 
             Object[] row; // stores row data
@@ -260,7 +257,7 @@ public class UserInterface extends javax.swing.JFrame {
         PatientPanelLayout.setHorizontalGroup(
             PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PatientPanelLayout.createSequentialGroup()
-                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PatientPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel18))
@@ -287,10 +284,10 @@ public class UserInterface extends javax.swing.JFrame {
                             .addComponent(jLabel27))
                         .addGap(18, 18, 18)
                         .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(opd_reason_regis_jTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(opd_doc_id_jTextField)
-                            .addComponent(opd_date_jTextField)
-                            .addComponent(opd_age_jTextField)
+                            .addComponent(opd_reason_regis_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(opd_doc_id_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(opd_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(opd_age_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(PatientPanelLayout.createSequentialGroup()
                         .addContainerGap()
@@ -301,7 +298,7 @@ public class UserInterface extends javax.swing.JFrame {
                         .addComponent(opd_del_jButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         PatientPanelLayout.setVerticalGroup(
@@ -339,7 +336,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(opd_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(opd_age_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(opd_age_jTextField)
                     .addComponent(jLabel26))
                 .addGap(18, 18, 18)
                 .addGroup(PatientPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,7 +347,7 @@ public class UserInterface extends javax.swing.JFrame {
                     .addComponent(opd_submit_jButton)
                     .addComponent(opd_del_jButton)
                     .addComponent(opd_update_jButton))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(114, 114, 114))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane3)
         );
@@ -359,6 +356,7 @@ public class UserInterface extends javax.swing.JFrame {
 
         Vector<Object[]> doc_data = new Vector<>();
         try {
+            Dbconnect connect = new Dbconnect(dbname, username, password);
             ResultSet res = connect.getData("select * from doctors");
             Object[] row; // stores row data
             System.out.println("Records from database: ");
@@ -487,7 +485,7 @@ public class UserInterface extends javax.swing.JFrame {
                             .addComponent(jLabel29)))
                     .addGap(26, 26, 26)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(1378, Short.MAX_VALUE))
+                    .addContainerGap(471, Short.MAX_VALUE))
             );
             DoctorPanelLayout.setVerticalGroup(
                 DoctorPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -541,9 +539,6 @@ public class UserInterface extends javax.swing.JFrame {
             jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
             jLabel7.setText("Name:");
 
-            jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-            jLabel8.setText("DOB:");
-
             jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
             jLabel9.setText("Blood Group:");
 
@@ -553,20 +548,14 @@ public class UserInterface extends javax.swing.JFrame {
             jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
             jLabel11.setText("Contact No:");
 
-            jLabel12.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+            jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
             jLabel12.setText("Emergency Person:");
 
-            jLabel13.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+            jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
             jLabel13.setText("Emergency Contact no:");
 
-            jLabel15.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-            jLabel15.setText("Date of admission:");
-
-            jLabel14.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+            jLabel14.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
             jLabel14.setText("Medical Treatement:");
-
-            jLabel16.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-            jLabel16.setText("Date of discharge:");
 
             jLabel17.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
             jLabel17.setText("Doctor Id:");
@@ -589,22 +578,10 @@ public class UserInterface extends javax.swing.JFrame {
                 }
             });
 
-            pat_adm_date_jTextField.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    pat_adm_date_jTextFieldActionPerformed(evt);
-                }
-            });
-
             pat_gender_jComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Female", "Male", "Rather not say" }));
             pat_gender_jComboBox.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     pat_gender_jComboBoxActionPerformed(evt);
-                }
-            });
-
-            pat_discharge_date_jTextField.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    pat_discharge_date_jTextFieldActionPerformed(evt);
                 }
             });
 
@@ -620,45 +597,17 @@ public class UserInterface extends javax.swing.JFrame {
             jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
             jLabel6.setText("Patient no:");
 
-            Vector<Object[]> pat_data = new Vector<>();
-            try {
-                ResultSet res = connect.getData("select * from patient");
-
-                Object[] row; // stores row data
-                System.out.println("Records from database: ");
-                while (res.next()){
-                    // checks all the entries from the DB (will not enter while loop if no entries)
-                    int patient_id= res.getInt("patient_no");
-                    String Name = res.getString("Name");
-                    Date DOB= res.getDate("DOB");
-                    String Blood_group= res.getString("Blood_group");
-                    String Gender= res.getString("Gender");
-                    int Contact_no= res.getInt("Contact_no");
-                    String Emergency_person= res.getString("Emergency_person");
-                    int Emergency_contact_no= res.getInt("Emergency_contact_no");
-                    String Medical_treatment= res.getString("Medical_treatment");
-                    Date Date_of_admission= res.getDate("Date_of_admission");
-                    Date Date_of_discharge= res.getDate("Date_of_discharge");
-                    int Doctor_id = res.getInt("Doctor_id");
-                    System.out.printf("pateint_no : %s\nName: %s\nDOB : %s\nBlood_group : %s\nGender : %s\nContact_no : %s\nEmergency_person : %s\nEmergency_contact_no : %s\nMedical_treatment : %s\nDate_of_admission : %s\nDate_of_discharge : %s\nDoctor_id : %s\n",patient_id,Name,DOB, Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id );
-
-                    row = new Object[] {patient_id,Name,DOB,Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Date_of_admission,Date_of_discharge,Doctor_id };
-
-                    pat_data.add(row);
-                }
-            } catch (SQLException ex) {
-                System.out.println("Fetching error: ");
-                ex.printStackTrace();
-            }
-            PatientTable.setModel(new javax.swing.table.DefaultTableModel(
-                pat_data.toArray( new Object [][] {}),
-                new String [] {
-                    "Patient no", "Name", "DOB", "Blood Group", "Gender", "Contact no", "Emergency Person", "Emergency Contact no", "Medical Treatment", "Date of Admission", "Date of Discharge", "Doctor Id"
-                }
-            ));
+            Dbconnect connect = new Dbconnect(dbname, username, password);
+            PatientTable.setModel(fetchPatTableData(PatientTable, true));
             jScrollPane2.setViewportView(PatientTable);
 
             pat_del_jButton.setText("DELETE");
+
+            pat_emerg_personjTextField.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    pat_emerg_personjTextFieldActionPerformed(evt);
+                }
+            });
 
             javax.swing.GroupLayout OPDPanelLayout = new javax.swing.GroupLayout(OPDPanel);
             OPDPanel.setLayout(OPDPanelLayout);
@@ -667,62 +616,53 @@ public class UserInterface extends javax.swing.JFrame {
                 .addGroup(OPDPanelLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(OPDPanelLayout.createSequentialGroup()
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7)
-                                .addComponent(jLabel8)
-                                .addComponent(jLabel9)
-                                .addComponent(jLabel10)
-                                .addComponent(jLabel11)
-                                .addComponent(jLabel12)
-                                .addComponent(jLabel13)
-                                .addComponent(jLabel14))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(pat_gender_jComboBox, 0, 149, Short.MAX_VALUE)
-                                .addComponent(pat_contactjTextField)
-                                .addComponent(pat_emerg_contjTextField)
-                                .addComponent(pat_blood_groupjTextField)
-                                .addComponent(pat_dobjTextField)
-                                .addComponent(pat_namejTextField)
-                                .addComponent(pat_nojTextField)
-                                .addComponent(pat_med_treatmentjTextField)
-                                .addGroup(OPDPanelLayout.createSequentialGroup()
-                                    .addComponent(pat_adm_date_jTextField)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                .addComponent(pat_emerg_personjTextField)))
+                        .addComponent(jLabel5)
                         .addGroup(OPDPanelLayout.createSequentialGroup()
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
                                 .addGroup(OPDPanelLayout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
+                                    .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel6)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel9)
+                                        .addComponent(jLabel10)
+                                        .addComponent(jLabel11)
+                                        .addComponent(jLabel12)
+                                        .addComponent(jLabel13)
+                                        .addComponent(jLabel14)
+                                        .addComponent(jLabel17))
                                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(OPDPanelLayout.createSequentialGroup()
-                                            .addComponent(pat_submit_jButton)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(pat_update_jButton)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(pat_del_jButton))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(pat_nojTextField)
+                                                .addComponent(pat_namejTextField)
+                                                .addComponent(pat_blood_groupjTextField)
+                                                .addComponent(pat_gender_jComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(pat_contactjTextField)
+                                                .addComponent(pat_emerg_personjTextField)
+                                                .addComponent(pat_emerg_contjTextField)
+                                                .addComponent(pat_doc_idjTextField)))
                                         .addGroup(OPDPanelLayout.createSequentialGroup()
-                                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(jLabel16)
-                                                .addComponent(jLabel15)
-                                                .addComponent(jLabel17))
-                                            .addGap(8, 8, 8)
-                                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(pat_doc_idjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(pat_discharge_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
+                                            .addGap(10, 10, 10)
+                                            .addComponent(pat_med_treatmentjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(OPDPanelLayout.createSequentialGroup()
+                                    .addGap(17, 17, 17)
+                                    .addComponent(pat_submit_jButton)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(pat_update_jButton)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(pat_del_jButton)))
+                            .addGap(51, 51, 51)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(38, 38, 38))
             );
             OPDPanelLayout.setVerticalGroup(
                 OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(OPDPanelLayout.createSequentialGroup()
+                    .addContainerGap()
                     .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(OPDPanelLayout.createSequentialGroup()
-                            .addContainerGap()
                             .addComponent(jLabel5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -732,74 +672,59 @@ public class UserInterface extends javax.swing.JFrame {
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel7)
                                 .addComponent(pat_namejTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGap(42, 42, 42)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel8)
-                                .addComponent(pat_dobjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel9)
                                 .addComponent(pat_blood_groupjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel10)
                                 .addComponent(pat_gender_jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel11)
                                 .addComponent(pat_contactjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(7, 7, 7)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(pat_emerg_personjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(22, 22, 22)
+                            .addGap(11, 11, 11)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel13)
                                 .addComponent(pat_emerg_contjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel14)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(pat_med_treatmentjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(pat_adm_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel15))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel16)
-                                .addComponent(pat_discharge_date_jTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(18, 18, 18)
-                            .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel17)
                                 .addComponent(pat_doc_idjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(35, 35, 35)
+                            .addGap(18, 18, 18)
                             .addGroup(OPDPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(pat_update_jButton)
-                                .addComponent(pat_submit_jButton)
-                                .addComponent(pat_del_jButton)))
-                        .addGroup(OPDPanelLayout.createSequentialGroup()
-                            .addGap(22, 22, 22)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(63, 63, 63))
+                                .addComponent(pat_del_jButton)
+                                .addComponent(pat_submit_jButton))))
+                    .addContainerGap(151, Short.MAX_VALUE))
             );
 
             jTabbedPane.addTab("Patient", OPDPanel);
+
+            jScrollPane4.setViewportView(jTabbedPane);
 
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 992, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 20, Short.MAX_VALUE))
             );
             layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap())
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 22, Short.MAX_VALUE))
             );
 
             pack();
@@ -821,23 +746,12 @@ public class UserInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_opd_doc_id_jTextFieldActionPerformed
 
-    private void pat_adm_date_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_adm_date_jTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pat_adm_date_jTextFieldActionPerformed
-
-    private void pat_contactjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_contactjTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pat_contactjTextFieldActionPerformed
-
-    private void pat_emerg_contjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_emerg_contjTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pat_emerg_contjTextFieldActionPerformed
-
     private void doc_del_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_del_jButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_doc_del_jButtonActionPerformed
 
     private void doc_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doc_submit_jButtonActionPerformed
+        Dbconnect connect = new Dbconnect(dbname, username, password);
         try(Connection conn = connect.getConnection()) {   // step 1: get connected to database
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
@@ -848,7 +762,6 @@ public class UserInterface extends javax.swing.JFrame {
             stmt.setLong(5, Long.parseLong(doc_contact_jTextField.getText()));
             stmt.setString(6,doc_time_jTextField.getName());
             System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
-            conn.close();
         } catch (SQLException ex) {
             System.out.println("Insertion error: ");
             ex.printStackTrace();
@@ -869,6 +782,7 @@ public class UserInterface extends javax.swing.JFrame {
     }//GEN-LAST:event_doc_id_jTextFieldActionPerformed
 
     private void opd_to_database(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opd_to_database
+        Dbconnect connect = new Dbconnect(dbname, username, password);
         try(Connection conn = connect.getConnection()) {   // step 1: get connected to database
             PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
             
@@ -878,43 +792,88 @@ public class UserInterface extends javax.swing.JFrame {
             stmt.setLong(4,Long.parseLong(opd_contact_jTextField.getText()));
             stmt.setString(5,opd_reason_regis_jTextField.getText());
             stmt.setInt(6, Integer.parseInt(opd_doc_id_jTextField.getText()));
-            stmt.setDate(7,new Date(Date.parse(opd_date_jTextField.getText())));
+            //stmt.setDate(7,new Date(Date.parse(opd_date_jTextField.getText())));
             stmt.setInt(8,Integer.parseInt(opd_age_jTextField.getText()));
             stmt.setString(9,jComboBox2.getName());
             System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
-            conn.close();
         } catch (SQLException ex) {
             System.out.println("Insertion error: ");
             ex.printStackTrace();
         }        
     }//GEN-LAST:event_opd_to_database
 
+    private void pat_emerg_personjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_emerg_personjTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pat_emerg_personjTextFieldActionPerformed
+
     private void pat_submit_jButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_submit_jButtonActionPerformed
+        Dbconnect connect = new Dbconnect(dbname, username, password);
         try(Connection conn = connect.getConnection()) {  // step 1: get connected to database
-            PreparedStatement stmt = conn.prepareStatement("INSERT INTO opd VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
-            
+            PreparedStatement stmt = conn.prepareStatement("INSERT INTO patient VALUES (?,?,?,?,?,?,?,?,?)");   // step 2: prepare a statement to push to DB
+
             stmt.setInt(1,Integer.parseInt(pat_nojTextField.getText()));   // step 3: fetch data from the form and fill the prepared statement
             stmt.setString(2,pat_namejTextField.getText());
-            stmt.setInt(3, Integer.parseInt(pat_dobjTextField.getText()));
-            stmt.setString(4,pat_blood_groupjTextField.getText());
-            stmt.setString(5,pat_gender_jComboBox.getName());
-            stmt.setLong(6,Long.parseLong(pat_contactjTextField.getText()));  
-            stmt.setString(7,pat_emerg_personjTextField.getText());
-            stmt.setLong(8,Long.parseLong(pat_emerg_contjTextField.getText())); 
-            stmt.setString(9,pat_med_treatmentjTextField.getText());
-            stmt.setInt(10,Integer.parseInt(pat_doc_idjTextField.getText()));  
-            stmt.setDate(11,new Date(Date.parse(pat_adm_date_jTextField.getText())));
-            stmt.setDate(12,new Date(Date.parse(pat_discharge_date_jTextField.getText())));
+           // stmt.setInt(3, Integer.parseInt(pat_dobjTextField.getText()));
+            stmt.setString(3,pat_blood_groupjTextField.getText());
+            stmt.setString(4,(String)pat_gender_jComboBox.getSelectedItem());
+            stmt.setLong(5,Long.parseLong(pat_contactjTextField.getText()));
+            stmt.setString(6,pat_emerg_personjTextField.getText());
+            stmt.setLong(7,Long.parseLong(pat_emerg_contjTextField.getText()));
+            stmt.setString(8,pat_med_treatmentjTextField.getText());
+            stmt.setInt(9,Integer.parseInt(pat_doc_idjTextField.getText()));
+            //stmt.setDate(11,new Date(Date.parse(pat_adm_date_jTextField.getText())));
+            //stmt.setDate(12,new Date(Date.parse(pat_discharge_date_jTextField.getText())));
             System.out.println(stmt.executeUpdate() + "records inserted."); // execute the statement. This will cause the data to be pushed.
-            conn.close();
-        } catch (SQLException ex) {
+            fetchPatTableData(PatientTable, false);
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, ex.getMessage(), "Insertion Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             System.out.println("Insertion error: ");
             ex.printStackTrace();
-        }        
-    }
+        }
+    }//GEN-LAST:event_pat_submit_jButtonActionPerformed
+    
+    public javax.swing.table.DefaultTableModel fetchPatTableData(javax.swing.JTable table, boolean init) {
+        Vector<Object[]> pat_data = new Vector<>();
+        try {
+            Dbconnect connect = new Dbconnect(dbname, username, password);
+            ResultSet res = connect.getData("select * from patient");
 
-//GEN-LAST:event_pat_submit_jButtonActionPerformed
+            Object[] row; // stores row data
+            System.out.println("Records from database: ");
+            while (res.next()){ 
+            // checks all the entries from the DB (will not enter while loop if no entries)
+                int patient_id= res.getInt("patient_no");
+                String Name = res.getString("Name");
+                String Blood_group= res.getString("Blood_group");
+                String Gender= res.getString("Gender");
+                int Contact_no= res.getInt("Contact_no");
+                String Emergency_person= res.getString("Emergency_person");
+                int Emergency_contact_no= res.getInt("Emergency_contact_no");
+                String Medical_treatment= res.getString("Medical_treatment");
+                int Doctor_id = res.getInt("Doctor_id");
 
+                row = new Object[] {patient_id,Name,Blood_group,Gender,Contact_no,Emergency_person,Emergency_contact_no,Medical_treatment,Doctor_id };
+
+                pat_data.add(row);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Fetching error: ");
+            ex.printStackTrace();
+        }
+        javax.swing.table.DefaultTableModel model = (javax.swing.table.DefaultTableModel)table.getModel();
+        if(init)
+            model = new javax.swing.table.DefaultTableModel(
+                pat_data.toArray( new Object [][] {}),
+                new String [] {
+                    "Patient no", "Name", "Blood Group", "Gender", "Contact no", "Emergency Person", "Emergency Contact no", "Medical Treatment",  "Doctor Id"
+                }
+            );
+        else model.fireTableDataChanged();
+        table.repaint();
+        
+        return model;
+    }   
+    
     private void pat_gender_jComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_gender_jComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pat_gender_jComboBoxActionPerformed
@@ -923,9 +882,13 @@ public class UserInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pat_doc_idjTextFieldActionPerformed
 
-    private void pat_discharge_date_jTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_discharge_date_jTextFieldActionPerformed
+    private void pat_emerg_contjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_emerg_contjTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_pat_discharge_date_jTextFieldActionPerformed
+    }//GEN-LAST:event_pat_emerg_contjTextFieldActionPerformed
+
+    private void pat_contactjTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pat_contactjTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pat_contactjTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -989,8 +952,6 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -1010,7 +971,6 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1018,6 +978,7 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTextField op_name_jTextField;
     private javax.swing.JTextField opd_address_jTextField;
@@ -1030,12 +991,9 @@ public class UserInterface extends javax.swing.JFrame {
     private javax.swing.JTextField opd_sho_jTextField;
     private javax.swing.JButton opd_submit_jButton;
     private javax.swing.JButton opd_update_jButton;
-    private javax.swing.JTextField pat_adm_date_jTextField;
     private javax.swing.JTextField pat_blood_groupjTextField;
     private javax.swing.JTextField pat_contactjTextField;
     private javax.swing.JButton pat_del_jButton;
-    private javax.swing.JTextField pat_discharge_date_jTextField;
-    private javax.swing.JTextField pat_dobjTextField;
     private javax.swing.JTextField pat_doc_idjTextField;
     private javax.swing.JTextField pat_emerg_contjTextField;
     private javax.swing.JTextField pat_emerg_personjTextField;
